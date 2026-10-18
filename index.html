@@ -1,259 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#743f2b">
-<title>東海道川崎宿 クイズラリー</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>東海道川崎宿 ハロウィン・クイズラリー</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
-:root{--brown:#743f2b;--cream:#faf5ec;--ink:#2f2925;--green:#356b45;--muted:#70665f;--line:#e8ddd1}
-*{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.7}
-header{padding:34px 18px 28px;background:var(--brown);color:white;text-align:center}
-.eyebrow{font-size:12px;letter-spacing:.18em;opacity:.85}
-h1{font-size:clamp(25px,6vw,36px);line-height:1.35;margin:8px 0}
-header p{margin:8px 0 0;font-size:14px}
-main{width:min(760px,100%);margin:auto;padding:16px}
-.panel,.spot{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 4px 16px #43271908}
-h2{font-size:20px;margin:0 0 8px}
-.muted{color:var(--muted);font-size:13px}
-.progressline{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px}
-.track{height:9px;background:#eee5dc;border-radius:99px;overflow:hidden;margin:8px 0 16px}
-#progressBar{height:100%;width:0;background:var(--green);transition:width .25s}
-button,input{font:inherit;width:100%;border-radius:10px;padding:12px 14px;margin-top:8px}
-button{border:0;background:var(--brown);color:white;font-weight:700;cursor:pointer}
-button:disabled{opacity:.55;cursor:wait}
-.spot-head{display:flex;gap:12px;align-items:flex-start}
-.number{flex:0 0 38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#f0e4d9;color:var(--brown);font-weight:800}
-.spot h3{font-size:18px;margin:0}
-.address{font-size:13px;color:var(--muted);margin:4px 0 12px}
-.status{font-size:14px;font-weight:700;margin:10px 0}
-.status.good{color:var(--green)}
-.question{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
-.question p{margin:7px 0}
-input{border:1px solid #cfc2b7;background:white}
-input:focus,button:focus-visible{outline:3px solid #d9a77c;outline-offset:2px}
-.result{font-size:14px;font-weight:650;min-height:1.5em}
-.hidden{display:none!important}
-footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
-.notice{background:#fff4d9;border:1px solid #ead5a3;border-radius:12px;padding:12px;font-size:13px}
-</style>
-</head>
-<body>
-<header>
-  <div class="eyebrow">HISTORICAL WALKING QUIZ</div>
-  <h1>東海道川崎宿<br>クイズラリー</h1>
-  <p>まちを歩いて、川崎宿の歴史を発見しよう。</p>
-</header>
+:root{--ink:#24170f;--orange:#d84b20;--purple:#54205d;--gold:#f4b43c;--paper:#fff5d9;--green:#335c38}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:"Yu Mincho","Hiragino Mincho ProN",serif;background:#243d46;background-image:radial-gradient(#f4b43c22 1px,transparent 1px);background-size:15px 15px}header{padding:26px 16px 30px;text-align:center;background:linear-gradient(#fff5d9eF,#f4dfb9ed),repeating-linear-gradient(45deg,#d5ad70 0 2px,#fff0d0 2px 6px);border-bottom:7px solid var(--orange);position:relative}header:before,header:after{content:"🎃";position:absolute;font-size:36px;top:18px}header:before{left:4%}header:after{right:4%}.eyebrow{font-weight:bold;letter-spacing:.18em;color:var(--purple)}h1{font-size:clamp(30px,6vw,54px);line-height:1.18;margin:12px auto;color:#17110c;text-shadow:2px 2px #f6c65b;max-width:850px}header p{font-weight:bold;font-size:18px;margin:8px}main{width:min(100% - 24px,980px);margin:22px auto}.panel,.spot{background:var(--paper);border:3px solid #a74b25;border-radius:22px;padding:20px;margin:18px 0;box-shadow:0 7px 0 #401b22;position:relative;background-image:radial-gradient(#9b6a3520 .7px,transparent .7px);background-size:8px 8px}h2{color:var(--purple);font-size:clamp(22px,4vw,30px);margin:0 0 12px;border-bottom:3px dashed #d99a42;padding-bottom:8px}.progressline{display:flex;justify-content:space-between;gap:12px;font-weight:bold}.track{height:12px;background:#ead4a7;border-radius:99px;overflow:hidden;margin:10px 0 14px}#progressBar{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--gold));transition:width .2s}button,.button{display:inline-block;border:2px solid #8f2e19;background:linear-gradient(#e65b27,#b83216);color:#fff8df;text-decoration:none;font:inherit;font-weight:bold;padding:12px 17px;border-radius:999px;cursor:pointer;text-align:center;box-shadow:0 3px 0 #67241a}button:disabled{opacity:.5}.button.secondary,button.secondary{background:linear-gradient(#74317b,#4d1b58);border-color:#36133d}.button.maplink{background:linear-gradient(#476b40,#244c30);border-color:#1d3b25}.spot-head{display:flex;gap:12px;align-items:flex-start}.number{flex:0 0 42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--orange);color:white;font-weight:bold;font-size:20px;border:2px solid #692c19}.spot h3{font-size:21px;margin:0}.address{font-size:14px;margin:5px 0 12px}.addresslinks{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.status{font-size:14px;font-weight:bold;margin:10px 0}.status.good{color:var(--green)}.question{border-top:1px dashed #c9a36a;margin-top:14px;padding-top:12px}.question p{font-size:17px;font-weight:bold}input{font:inherit;width:100%;padding:12px;border:2px solid #c9a36a;border-radius:10px;background:#fffdf5;margin:6px 0}.result{font-weight:bold;min-height:1.5em}.muted{font-size:13px;opacity:.85}.notice{background:#ffebbd;border:2px dashed #d98a2e;border-radius:12px;padding:12px}.hidden{display:none!important}#allMap,#exchangeMap{height:360px;border:3px solid #7a3b24;border-radius:15px;z-index:0}.maplist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.mapitem{border:1px dashed #bc8741;padding:10px;border-radius:12px}.banner{background:var(--purple);color:#fff4a8;padding:15px;border-radius:14px;text-align:center;font-weight:bold;font-size:clamp(21px,4vw,32px);transform:rotate(-1deg);margin:16px 0}.certificate{border:7px double #c58b32;text-align:center;padding:24px;background:#fff9e7;border-radius:8px}.certificate h2{color:#b73820;border:0}footer{text-align:center;color:#fff2d4;padding:24px 12px;font-size:13px}a{overflow-wrap:anywhere}@media(min-width:720px){.twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+</style></head><body>
+<header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
 <main>
-  <section class="panel">
-    <h2>クイズラリーに挑戦</h2>
-    <p>各スポットの近くで現在地を確認して、クイズに答えましょう。</p>
-    <div class="progressline"><span>クリア状況</span><strong id="progressText">0 / 6 スポット</strong></div>
-    <div class="track"><div id="progressBar"></div></div>
-    <button id="gpsButton">現在地を確認する</button>
-    <p id="gpsStatus" class="muted" aria-live="polite">位置情報を使うには、ブラウザで許可してください。</p>
-    <div class="notice">GPS判定は通常の位置情報チェックです。端末の設定や周囲の建物により、位置に誤差が出ることがあります。</div>
-  </section>
-  <div id="spots"></div>
-  <section id="complete" class="panel hidden">
-    <h2>🎉 コンプリート！</h2>
-    <p>東海道川崎宿のクイズラリーをすべてクリアしました。</p>
-    <p>ご参加ありがとうございました！</p>
-  </section>
-  <section id="prizeEntry" class="panel hidden">
-    <h2>🎁 景品交換のご案内</h2>
-    <p>3問以上のクイズに正解しました！景品交換ページへ進めます。</p>
-    <button id="prizeButton">景品交換ページへ進む</button>
-  </section>
-  <p class="muted">試作版：座標・一部の正解は公開前に現地で確認してください。</p>
-</main>
-<footer>東海道川崎宿 クイズラリー</footer>
+<section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットの近くで「現在地を確認」を押してクイズに答えてね。<br>3問回答すると景品交換ページへ進めます。6問すべて正解すると東海道マスター！</p><div class="progressline"><span>回答した問題</span><strong id="answeredText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="progressline"><span>正解した問題</span><strong id="correctText">0 / 6 問</strong></div><button id="gpsButton">📍 現在地を確認する</button><p id="gpsStatus" class="muted">位置情報を使うには、ブラウザで許可してください。</p><div class="notice">位置情報の誤差がある場合は、屋外で再確認してください。位置情報を使うにはHTTPS接続が必要です。</div></section>
+<section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所本庁舎を中心に、クイズスポットの位置を表示しています。マーカーを押すとスポット名と住所を確認できます。</p><div id="allMap"></div></section>
+<div id="spots"></div>
+<section id="threePanel" class="panel hidden"><div class="banner">🎃 トリック・オア・トリート！ 👻</div><h2>3問回答ありがとう！</h2><p>クイズに3問回答しました！正解・不正解にかかわらず、景品交換ページへ進めます。</p><p><strong>お菓子と交換しよう！</strong></p><a class="button" href="prize.html">🍬 景品交換ページへ</a><h2 style="margin-top:24px">東海道かわさき宿交流館周辺マップ</h2><p>景品交換場所の目印にしてください。</p><div id="exchangeMap3" class="exchangeMap" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div><p><a class="button maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=東海道かわさき宿交流館%20神奈川県川崎市川崎区本町1丁目8-4">Googleマップで交流館への行き先を開く</a></p></section>
+<section id="sixPanel" class="panel hidden"><div class="certificate"><div style="font-size:38px">🏅 👻 🎃</div><h2>全問答えてくれてありがとう！</h2><p style="font-size:25px;font-weight:bold">あなたは東海道マスターだ！</p><div class="banner">表彰状が貰えるよ！</div><p>6問すべて正解、おめでとうございます！</p></div><h2 style="margin-top:24px">東海道かわさき宿交流館周辺マップ</h2><div id="exchangeMap6" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div><p><a class="button maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=東海道かわさき宿交流館%20神奈川県川崎市川崎区本町1丁目8-4">Googleマップで交流館への行き先を開く</a></p><p><a class="button" href="prize.html">景品・表彰状の案内を見る</a></p></section>
+</main><footer>東海道川崎宿 ハロウィン・クイズラリー<br>GPS判定は簡易的な仕組みです。</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
-/*
-公開前に必ず確認してください：
-・lat / lng は現地で測った対象物の座標に差し替える
-・②宗三寺の正解を現地で確認して設定する
-・GPS判定はブラウザ側の簡易判定であり、不正対策として完全ではない
-*/
-const spots = [
-  {
-    id:1, name:"坂本九さんの記念碑",
-    address:"〒210-0007 神奈川県川崎市川崎区駅前本町（JR川崎駅東口駅広場）",
-    lat:35.5308, lng:139.6975, radius:80,
-    question:"JR東海道線の駅メロにもなっている坂本九さんの歌は何でしょう？",
-    answers:["上を向いて歩こう"],
-    hint:"ヒント：坂本九さんの代表曲です。"
-  },
-  {
-    id:2, name:"宗三寺",
-    address:"〒210-0006 神奈川県川崎市川崎区砂子1丁目4-3",
-    lat:35.5315, lng:139.7000, radius:80,
-    question:"敷地内にある、みんなの安全を祈るお地蔵さんは、どの方向を向いているでしょう？",
-    answers:[],
-    hint:"現地でお地蔵さんの向きを確認しましょう。"
-  },
-  {
-    id:3, name:"一行寺",
-    address:"〒210-0001 神奈川県川崎市川崎区本町1丁目1-5",
-    lat:35.5310, lng:139.6990, radius:80,
-    question:"東海道沿道の老舗和菓子店「東照」で再現されている、川崎の名物料理は何でしょう？",
-    answers:["奈良茶飯"],
-    hint:"ヒント：江戸時代の川崎宿で旅人に親しまれた料理です。"
-  },
-  {
-    id:4, name:"東海道かわさき宿交流館",
-    address:"〒210-0001 神奈川県川崎市川崎区本町1丁目8-4",
-    lat:35.5310, lng:139.7000, radius:80,
-    question:"東海道かわさき宿交流館の公認キャラクターの名前は何でしょう？",
-    answers:["飛脚の六さん"],
-    hint:"ヒント：飛脚の姿をしたキャラクターです。"
-  },
-  {
-    id:5, name:"妙遠寺・泉田二君功徳碑",
-    address:"〒210-0012 神奈川県川崎市川崎区宮前町6-5",
-    lat:35.5265, lng:139.7030, radius:80,
-    question:"小泉次大夫が完成に尽力した、川崎を通る用水の名称は何でしょう？",
-    answers:["二ヶ領用水","二ケ領用水"],
-    hint:"ヒント：稲毛・川崎の領域に関係する用水です。"
-  },
-  {
-    id:6, name:"佐藤惣之助の生誕地",
-    address:"〒210-0006 神奈川県川崎市川崎区砂子2丁目11付近",
-    lat:35.5290, lng:139.7000, radius:80,
-    question:"佐藤惣之助が作詞した、阪神タイガースの応援歌は何でしょう？",
-    answers:["六甲おろし","阪神タイガースの歌"],
-    hint:"ヒント：六甲山から吹き下ろす風の名前です。"
-  }
-];
-
-let currentPosition = null;
-let completed = readProgress();
-function readProgress(){
-  try {
-    const value = JSON.parse(localStorage.getItem("kawasakiQuizCompleted") || "[]");
-    return Array.isArray(value) ? value.filter(id => spots.some(s => s.id === id)) : [];
-  } catch(e){ return []; }
-}
-function saveProgress(){
-  try { localStorage.setItem("kawasakiQuizCompleted", JSON.stringify(completed)); }
-  catch(e){ console.warn("進捗を保存できませんでした", e); }
-}
-function normalize(s){ return s.trim().replace(/\s+/g,"").toLowerCase(); }
-function distanceMeters(lat1,lng1,lat2,lng2){
-  const rad = d => d * Math.PI / 180;
-  const dLat=rad(lat2-lat1), dLng=rad(lng2-lng1);
-  const a=Math.sin(dLat/2)**2 + Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLng/2)**2;
-  return 6371000 * 2 * Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-}
-function make(tag, className, text){
-  const el=document.createElement(tag);
-  if(className) el.className=className;
-  if(text !== undefined) el.textContent=text;
-  return el;
-}
-function render(){
-  const container=document.getElementById("spots");
-  container.replaceChildren();
-  spots.forEach(spot=>{
-    const done=completed.includes(spot.id);
-    const distance=currentPosition ? Math.round(distanceMeters(
-      currentPosition.latitude,currentPosition.longitude,spot.lat,spot.lng
-    )) : null;
-    const nearby=distance!==null && distance<=spot.radius;
-    const card=make("section","spot");
-    const head=make("div","spot-head");
-    head.append(make("div","number",String(spot.id)));
-    const titleWrap=make("div","");
-    titleWrap.append(make("h3","",spot.name));
-    titleWrap.append(make("div","address",spot.address));
-    head.append(titleWrap); card.append(head);
-
-    const status=make("p","status");
-    if(done){status.textContent="✓ クリア済み";status.classList.add("good");}
-    else if(nearby){status.textContent=`📍 対象エリア内（約${distance}m）`;status.classList.add("good");}
-    else if(distance!==null){status.textContent=`対象エリア外（約${distance}m）`;}
-    else {status.textContent="現在地を確認してください";}
-    card.append(status);
-
-    if(done){
-      card.append(make("p","muted","このスポットはクリア済みです。"));
-    }else if(nearby){
-      const q=make("div","question");
-      q.append(make("p","",spot.question));
-      q.append(make("p","muted",spot.hint));
-      const input=make("input","");
-      input.placeholder="回答を入力してください";
-      input.setAttribute("aria-label",spot.name+"の回答");
-      input.autocomplete="off";
-      q.append(input);
-      const result=make("p","result","");
-      result.setAttribute("aria-live","polite");
-      q.append(result);
-      const submit=make("button","","回答する");
-      submit.addEventListener("click",()=>{
-        if(!spot.answers.length){
-          result.textContent="このクイズの正解は未設定です。主催者が正解を設定するまで回答できません。";
-          return;
-        }
-        if(!navigator.geolocation){
-          result.textContent="このブラウザでは位置情報を利用できません。";
-          return;
-        }
-        submit.disabled=true; result.textContent="現在地を再確認しています…";
-        navigator.geolocation.getCurrentPosition(pos=>{
-          const d=distanceMeters(pos.coords.latitude,pos.coords.longitude,spot.lat,spot.lng);
-          currentPosition=pos.coords;
-          if(d>spot.radius){
-            result.textContent="対象エリア外です。現地で再度お試しください。";
-            submit.disabled=false; render(); return;
-          }
-          if(spot.answers.some(a=>normalize(a)===normalize(input.value))){
-            if(!completed.includes(spot.id)) completed.push(spot.id);
-            saveProgress(); render();
-          }else{
-            result.textContent="不正解です。ヒントを見てもう一度挑戦しましょう。";
-            submit.disabled=false;
-          }
-        },()=>{
-          result.textContent="現在地を確認できません。位置情報の許可と端末の設定を確認してください。";
-          submit.disabled=false;
-        },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
-      });
-      q.append(submit); card.append(q);
-    }else{
-      card.append(make("p","muted","この場所の近くに着いたら、上の「現在地を確認する」を押してください。"));
-    }
-    container.append(card);
-  });
-  document.getElementById("progressText").textContent=`${completed.length} / ${spots.length} スポット`;
-  document.getElementById("progressBar").style.width=`${completed.length/spots.length*100}%`;
-  document.getElementById("complete").classList.toggle("hidden",completed.length!==spots.length);
-  document.getElementById("prizeEntry").classList.toggle("hidden",completed.length<3);
-}
-document.getElementById("gpsButton").addEventListener("click",()=>{
-  const button=document.getElementById("gpsButton");
-  const status=document.getElementById("gpsStatus");
-  if(!navigator.geolocation){status.textContent="このブラウザは位置情報に対応していません。";return;}
-  button.disabled=true;status.textContent="現在地を確認しています…";
-  navigator.geolocation.getCurrentPosition(pos=>{
-    currentPosition=pos.coords;
-    status.textContent=`位置情報を取得しました（精度：約${Math.round(pos.coords.accuracy)}m）。`;
-    button.disabled=false;render();
-  },err=>{
-    const messages={
-      1:"位置情報が許可されていません。ブラウザのサイト設定から位置情報を許可してください。",
-      2:"現在地を取得できません。端末の位置情報設定を確認してください。",
-      3:"位置情報の取得がタイムアウトしました。屋外でもう一度お試しください。"
-    };
-    status.textContent=messages[err.code]||"位置情報を取得できません。HTTPS接続と端末の設定を確認してください。";
-    button.disabled=false;
-  },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
-});
-document.getElementById("prizeButton").addEventListener("click",()=>{
-  window.location.href="prize.html";
-});
-render();
-</script>
-</body>
-</html>
+const ANSWER_KEY='kawasakiQuizAnswered', CORRECT_KEY='kawasakiQuizCompleted';
+const spots=[
+{id:1,name:'坂本九さんの記念碑',address:'〒210-0007 神奈川県川崎市川崎区駅前本町（JR川崎駅東口駅広場）',lat:35.5308,lng:139.6975,radius:100,question:'JR東海道線の駅メロにもなっている坂本九さんの歌は何でしょう？',answers:['上を向いて歩こう'],hint:'坂本九さんの代表曲です。'},
+{id:2,name:'宗三寺',address:'〒210-0006 神奈川県川崎市川崎区砂子1丁目4-3',lat:35.5315,lng:139.7000,radius:100,question:'敷地内にある、みんなの安全を祈るお地蔵さんは、どの方向を向いているでしょう？',answers:['東向き','東向'],hint:'現地でお地蔵さんの向きを確認しましょう。'},
+{id:3,name:'一行寺',address:'〒210-0001 神奈川県川崎市川崎区本町1丁目1-5',lat:35.5310,lng:139.6990,radius:100,question:'東海道沿道の老舗和菓子店「東照」で再現されている、川崎の名物料理は何でしょう？',answers:['奈良茶飯'],hint:'江戸時代の川崎宿で旅人に親しまれた料理です。'},
+{id:4,name:'東海道かわさき宿交流館',address:'〒210-0001 神奈川県川崎市川崎区本町1丁目8-4',lat:35.5310,lng:139.7000,radius:100,question:'東海道かわさき宿交流館の公認キャラクターの名前は何でしょう？',answers:['飛脚の六さん'],hint:'飛脚の姿をしたキャラクターです。'},
+{id:5,name:'妙遠寺・泉田二君功徳碑',address:'〒210-0012 神奈川県川崎市川崎区宮前町6-5',lat:35.5265,lng:139.7030,radius:100,question:'小泉次大夫の功績に関係する、川崎の農業を支えた用水は何でしょう？',answers:['二ヶ領用水','二ケ領用水'],hint:'「二ヶ領」と書く用水です。'},
+{id:6,name:'佐藤惣之助の生誕地',address:'〒210-0006 神奈川県川崎市川崎区砂子2丁目11付近',lat:35.5290,lng:139.7000,radius:100,question:'佐藤惣之助が作詞した、阪神タイガースの球団歌として知られる曲は何でしょう？',answers:['六甲おろし','阪神タイガースの歌'],hint:'六甲山から吹く風の名前が入っています。'}];
+function read(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}}
+let answered=read(ANSWER_KEY).filter(x=>Number.isInteger(x)&&x>=1&&x<=6),completed=read(CORRECT_KEY).filter(x=>Number.isInteger(x)&&x>=1&&x<=6),position=null;
+function save(){localStorage.setItem(ANSWER_KEY,JSON.stringify(answered));localStorage.setItem(CORRECT_KEY,JSON.stringify(completed));updateProgress()}
+function mapsUrl(s){return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(s.address)}
+function updateProgress(){document.getElementById('answeredText').textContent=`${answered.length} / 6 問`;document.getElementById('correctText').textContent=`${completed.length} / 6 問`;document.getElementById('progressBar').style.width=(answered.length/6*100)+'%';document.getElementById('threePanel').classList.toggle('hidden',answered.length<3);document.getElementById('sixPanel').classList.toggle('hidden',completed.length<6);if(answered.length>=3){setTimeout(()=>{['exchangeMap3','exchangeMap6'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.ready&&((id==='exchangeMap3'&&answered.length>=3)||(id==='exchangeMap6'&&completed.length>=6))){makeExchangeMap(id);el.dataset.ready='1'}})},100)}}
+function renderSpots(){const root=document.getElementById('spots');root.innerHTML='';spots.forEach(s=>{const el=document.createElement('section');el.className='spot';el.innerHTML=`<div class="spot-head"><div class="number">${s.id}</div><div><h3>${s.name}</h3><div class="address">${s.address}</div></div></div><div class="addresslinks"><a class="button maplink" target="_blank" rel="noopener" href="${mapsUrl(s)}">📍 Googleマップで行き先を開く</a></div><div class="status" id="status-${s.id}">現地で現在地を確認すると、クイズが表示されます。</div><div class="question hidden" id="question-${s.id}"><p>Q${s.id}. ${s.question}</p><details><summary>ヒントを見る</summary><p>${s.hint}</p></details><form id="form-${s.id}"><input id="answer-${s.id}" autocomplete="off" placeholder="答えを入力" aria-label="${s.name}の答え"><button type="submit">回答する</button></form><p class="result" id="result-${s.id}"></p></div>`;root.appendChild(el);document.getElementById(`form-${s.id}`).addEventListener('submit',e=>{e.preventDefault();submitAnswer(s)})})}
+function submitAnswer(s){if(!position){alert('先に「現在地を確認する」を押してください。');return}const d=distance(position.lat,position.lng,s.lat,s.lng);if(d>s.radius){document.getElementById(`result-${s.id}`).textContent=`このスポットの近くではありません（約${Math.round(d)}m離れています）。現地で回答してください。`;return}const val=document.getElementById(`answer-${s.id}`).value.trim().replace(/[　\s]/g,'');if(!val){document.getElementById(`result-${s.id}`).textContent='答えを入力してください。';return}if(!answered.includes(s.id))answered.push(s.id);const ok=s.answers.some(a=>a.replace(/[　\s]/g,'')===val);if(ok){if(!completed.includes(s.id))completed.push(s.id);document.getElementById(`result-${s.id}`).textContent='🎉 正解！回答済みとして記録しました。';document.getElementById(`status-${s.id}`).textContent='✅ 回答済み・正解';document.getElementById(`status-${s.id}`).classList.add('good')}else{document.getElementById(`result-${s.id}`).textContent='回答を記録しました。残念、答えが違うようです。ヒントを見てもう一度挑戦してね。';document.getElementById(`status-${s.id}`).textContent='回答済み（再挑戦できます）'}save();if(answered.length>=3)document.getElementById('threePanel').scrollIntoView({behavior:'smooth',block:'start'});if(completed.length===6)document.getElementById('sixPanel').scrollIntoView({behavior:'smooth',block:'start'})}
+function distance(a,b,c,d){const r=Math.PI/180,dl=(c-a)*r,dg=(d-b)*r;const x=Math.sin(dl/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(dg/2)**2;return 6371000*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
+document.getElementById('gpsButton').addEventListener('click',()=>{const status=document.getElementById('gpsStatus');if(!navigator.geolocation){status.textContent='このブラウザでは位置情報が使えません。';return}status.textContent='現在地を確認中…';navigator.geolocation.getCurrentPosition(p=>{position={lat:p.coords.latitude,lng:p.coords.longitude};status.textContent='現在地を取得しました。近くのスポットで回答してください。';spots.forEach(s=>{const d=distance(position.lat,position.lng,s.lat,s.lng);const near=d<=s.radius;document.getElementById(`status-${s.id}`).textContent=near?`📍 現地確認OK（約${Math.round(d)}m）。クイズが表示されました。`:`現地で確認してください（現在地から約${Math.round(d)}m）`;document.getElementById(`question-${s.id}`).classList.toggle('hidden',!near);});},e=>{status.textContent='位置情報を取得できませんでした。位置情報の許可とHTTPS接続を確認してください。'},{enableHighAccuracy:true,timeout:15000,maximumAge:0})});
+function makeExchangeMap(id){const el=document.getElementById(id);if(!el||!window.L)return;const m=L.map(id).setView([35.5310,139.7000],16);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.5310,139.7000]).addTo(m).bindPopup('<b>東海道かわさき宿交流館</b><br>〒210-0001 川崎市川崎区本町1丁目8-4').openPopup();L.circle([35.5310,139.7000],{radius:350,color:'#d84b20'}).addTo(m);setTimeout(()=>m.invalidateSize(),200)}
+function makeMainMap(){if(!window.L)return;const cityHall=[35.53091408,139.7030842];const m=L.map('allMap').setView(cityHall,15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker(cityHall).addTo(m).bindPopup('<b>川崎市役所 本庁舎</b><br>川崎市川崎区宮本町1番地');spots.forEach(s=>L.marker([s.lat,s.lng]).addTo(m).bindPopup(`<b>${s.id}. ${s.name}</b><br>${s.address}`));}
+renderSpots();makeMainMap();updateProgress();
+</script></body></html>
