@@ -9,6 +9,7 @@
 </style></head><body>
 <header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
 <main>
+<section id="prizeClosedBanner" class="panel hidden" style="border-color:#9b1c1c"><div class="banner" style="background:#9b1c1c">🎁 景品交換は締め切りました</div><p>景品の受付は終了しました。ご参加ありがとうございました！</p></section>
 <section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットの近くで「現在地を確認」を押してクイズに答えてね。<br>3問回答すると景品交換ページへ進めます。6問すべて正解すると東海道マスター！</p><div class="progressline"><span>回答した問題</span><strong id="answeredText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="progressline"><span>正解した問題</span><strong id="correctText">0 / 6 問</strong></div><button id="gpsButton">📍 現在地を確認する</button><p id="gpsStatus" class="muted">位置情報を使うには、ブラウザで許可してください。</p><div class="notice">位置情報の誤差がある場合は、屋外で再確認してください。位置情報を使うにはHTTPS接続が必要です。</div></section>
 <section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所本庁舎を中心に、クイズスポットの位置を表示しています。マーカーを押すとスポット名と住所を確認できます。</p><div id="allMap"></div></section>
 <div id="spots"></div>
@@ -27,7 +28,7 @@ const spots=[
 {id:6,name:'佐藤惣之助の生誕地',address:'〒210-0006 神奈川県川崎市川崎区砂子2丁目11付近',lat:35.5290,lng:139.7000,radius:100,question:'佐藤惣之助が作詞した、阪神タイガースの球団歌として知られる曲は何でしょう？',answers:['六甲おろし','阪神タイガースの歌'],hint:'六甲山から吹く風の名前が入っています。'}];
 function read(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}}
 let answered=read(ANSWER_KEY).filter(x=>Number.isInteger(x)&&x>=1&&x<=6),completed=read(CORRECT_KEY).filter(x=>Number.isInteger(x)&&x>=1&&x<=6),position=null;
-function save(){localStorage.setItem(ANSWER_KEY,JSON.stringify(answered));localStorage.setItem(CORRECT_KEY,JSON.stringify(completed));updateProgress()}
+function save(){localStorage.setItem(ANSWER_KEY,JSON.stringify(answered));localStorage.setItem(CORRECT_KEY,JSON.stringify(completed));updateProgress();window.dispatchEvent(new CustomEvent('quiz-progress-updated',{detail:{answered:[...answered],completed:[...completed]}}))}
 function mapsUrl(s){return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(s.address)}
 function updateProgress(){document.getElementById('answeredText').textContent=`${answered.length} / 6 問`;document.getElementById('correctText').textContent=`${completed.length} / 6 問`;document.getElementById('progressBar').style.width=(answered.length/6*100)+'%';document.getElementById('threePanel').classList.toggle('hidden',answered.length<3);document.getElementById('sixPanel').classList.toggle('hidden',completed.length<6);if(answered.length>=3){setTimeout(()=>{['exchangeMap3','exchangeMap6'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.ready&&((id==='exchangeMap3'&&answered.length>=3)||(id==='exchangeMap6'&&completed.length>=6))){makeExchangeMap(id);el.dataset.ready='1'}})},100)}}
 function renderSpots(){const root=document.getElementById('spots');root.innerHTML='';spots.forEach(s=>{const el=document.createElement('section');el.className='spot';el.innerHTML=`<div class="spot-head"><div class="number">${s.id}</div><div><h3>${s.name}</h3><div class="address">${s.address}</div></div></div><div class="addresslinks"><a class="button maplink" target="_blank" rel="noopener" href="${mapsUrl(s)}">📍 Googleマップで行き先を開く</a></div><p><button type="button" class="spot-gps" data-spot-id="${s.id}">📍 このスポットで現在地を確認</button></p><div class="status" id="status-${s.id}">現地で「現在地を確認」を押すと、クイズが表示されます。</div><div class="question hidden" id="question-${s.id}"><p>Q${s.id}. ${s.question}</p><details><summary>ヒントを見る</summary><p>${s.hint}</p></details><form id="form-${s.id}"><input id="answer-${s.id}" autocomplete="off" placeholder="答えを入力" aria-label="${s.name}の答え"><button type="submit">回答する</button></form><p class="result" id="result-${s.id}"></p></div>`;root.appendChild(el);document.getElementById(`form-${s.id}`).addEventListener('submit',e=>{e.preventDefault();submitAnswer(s)});el.querySelector('.spot-gps').addEventListener('click',()=>checkSpotLocation(s))})}
@@ -39,4 +40,31 @@ document.getElementById('gpsButton').addEventListener('click',()=>{const status=
 function makeExchangeMap(id){const el=document.getElementById(id);if(!el||!window.L)return;const m=L.map(id).setView([35.5310,139.7000],16);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.5310,139.7000]).addTo(m).bindPopup('<b>東海道かわさき宿交流館</b><br>〒210-0001 川崎市川崎区本町1丁目8-4').openPopup();L.circle([35.5310,139.7000],{radius:350,color:'#d84b20'}).addTo(m);setTimeout(()=>m.invalidateSize(),200)}
 function makeMainMap(){if(!window.L)return;const cityHall=[35.53091408,139.7030842];const m=L.map('allMap').setView(cityHall,15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker(cityHall).addTo(m).bindPopup('<b>川崎市役所 本庁舎</b><br>川崎市川崎区宮本町1番地');spots.forEach(s=>L.marker([s.lat,s.lng]).addTo(m).bindPopup(`<b>${s.id}. ${s.name}</b><br>${s.address}`));}
 renderSpots();makeMainMap();updateProgress();
-</script></body></html>
+</script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
+import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, arrayUnion, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
+import { firebaseConfig } from './firebase-config.js';
+const configured = firebaseConfig && firebaseConfig.apiKey && !String(firebaseConfig.apiKey).startsWith('PASTE_');
+if (!configured) { console.warn('Firebase未設定です。firebase-config.jsに設定を入力してください。'); }
+else {
+ try {
+  const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app);
+  await signInAnonymously(auth);
+  const uid=auth.currentUser.uid;
+  async function syncProgress(detail={}) {
+   const answered=Array.isArray(detail.answered)?detail.answered:JSON.parse(localStorage.getItem('kawasakiQuizAnswered')||'[]');
+   const completed=Array.isArray(detail.completed)?detail.completed:JSON.parse(localStorage.getItem('kawasakiQuizCompleted')||'[]');
+   const ref=doc(db,'participants',uid);
+   await setDoc(ref,{answered:arrayUnion(...answered),completed:arrayUnion(...completed),updatedAt:serverTimestamp(),lastSeenAt:serverTimestamp()},{merge:true});
+  }
+  await syncProgress();
+  window.addEventListener('quiz-progress-updated',e=>syncProgress(e.detail).catch(err=>console.error('参加状況の同期に失敗:',err)));
+  const settings=await getDoc(doc(db,'settings','event'));
+  const closed= settings.exists() && settings.data().prizeClosed===true;
+  if(closed){const banner=document.getElementById('prizeClosedBanner');if(banner)banner.classList.remove('hidden');document.querySelectorAll('a[href="prize.html"]').forEach(a=>{a.classList.add('hidden');a.setAttribute('aria-disabled','true')});}
+ } catch(err){console.error('Firebase接続エラー:',err);}
+}
+</script>
+</body></html>
