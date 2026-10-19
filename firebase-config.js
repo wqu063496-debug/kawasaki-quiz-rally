@@ -1,10 +1,10 @@
-// Firebaseコンソールの「プロジェクトの設定」→「マイアプリ」から値をコピーしてください。
-// apiKeyは公開用設定値ですが、このファイルを秘密鍵の保管場所として使わないでください。
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-  apiKey: "PASTE_API_KEY_HERE",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyAOd3Kc1L_pze5Kvf9c2Kg9HOx4iTXTTPg",
+  authDomain: "toukaidou-63da4.firebaseapp.com",
+  projectId: "toukaidou-63da4",
+  storageBucket: "toukaidou-63da4.firebasestorage.app",
+  messagingSenderId: "580588787050",
+  appId: "1:580588787050:web:3241ab192f1f35c6bd0113",
+  measurementId: "G-MKBBH5L5GH"
 };
