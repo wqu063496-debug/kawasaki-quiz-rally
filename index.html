@@ -32,15 +32,44 @@ input:focus,button:focus-visible{outline:3px solid #d9a77c;outline-offset:2px}
 footer{text-align:center;padding:20px;font-size:12px;color:var(--muted)}
 .notice{background:#fff4d9;border:1px solid #ead5a3;border-radius:12px;padding:12px;font-size:13px}
 
-.quiz-card{border:3px solid #d99a42;border-radius:18px;padding:20px;background:#fffdf4}.quiz-card p{font-size:19px;line-height:1.8;font-weight:bold}.status-badge{color:#335c38;font-weight:bold}.status-error{color:#a22e20;font-weight:bold}.qr-info{background:#ffebbd;border:2px dashed #d98a2e;border-radius:12px;padding:14px}.spotlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.spot-mini{border:2px solid #d5a25a;border-radius:14px;padding:14px;background:#fffdf5}.spot-mini h3{margin:0 0 8px}.small{font-size:13px}.panel .button{margin:5px 0}.quiz-card input{font-size:18px}.hidden{display:none!important}</style></head><body>
+.quiz-card{border:3px solid #d99a42;border-radius:18px;padding:20px;background:#fffdf4}.quiz-card p{font-size:19px;line-height:1.8;font-weight:bold}.status-badge{color:#335c38;font-weight:bold}.status-error{color:#a22e20;font-weight:bold}.qr-info{background:#ffebbd;border:2px dashed #d98a2e;border-radius:12px;padding:14px}.spotlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.spot-mini{border:2px solid #d5a25a;border-radius:14px;padding:14px;background:#fffdf5}.spot-mini h3{margin:0 0 8px}.small{font-size:13px}.panel .button{margin:5px 0}.quiz-card input{font-size:18px}.hidden{display:none!important}
+/* 夜のハロウィン・ポップテーマ */
+:root{--brown:#51216f;--cream:#151225;--ink:#fff3dc;--green:#80e4a4;--muted:#cbbbd7;--line:#744b92}
+body{background:radial-gradient(circle at 10% 12%,#472359 0,transparent 35%),radial-gradient(circle at 90% 30%,#512d2d 0,transparent 36%),#151225;color:var(--ink)}
+header{background:linear-gradient(130deg,#311348,#4b206a 58%,#8a3a2b);border-bottom:5px solid #ffae32;position:relative;overflow:hidden}
+header:before{content:'🦇   ✨   🎃';position:absolute;left:3%;top:12px;opacity:.7;font-size:20px}
+header h1{color:#ffcf62;text-shadow:2px 3px #190f31,0 0 15px #f36e6044}
+.panel,.spot{background:#28203c;border:2px solid #8758a2;box-shadow:0 8px 0 #0e0b19,0 0 22px #fa90301b}
+h2{color:#ffbd53} .muted,.address{color:#cfc0d8}
+.track{background:#443557}#progressBar{background:linear-gradient(90deg,#ff8c35,#ffc44c)}
+.qr-info,.notice{background:#483153;border:2px dashed #ffa948;color:#fff0d9}
+.quiz-card,.spot-mini{background:#352744;border:2px solid #e8a149;color:#fff4e5}
+.spot-mini{border-radius:18px}.spot-mini h3{color:#ffd16c}
+button,.button{display:inline-flex;justify-content:center;align-items:center;gap:6px;width:auto;max-width:100%;border:2px solid #ffc14e;background:linear-gradient(135deg,#fa7d31,#d4495d);color:#fff;border-radius:13px;padding:10px 15px;font-weight:800;text-decoration:none;cursor:pointer;box-shadow:0 3px 0 #69263e}
+button.secondary{background:#61347d;color:white;border-color:#b47be2}
+input{background:#fff9ee;color:#291e31;border:2px solid #dda65b}
+.number{background:#ffaf45;color:#281536}.status.good,.status-badge{color:#95e5aa}
+#allMap{height:350px;border:3px solid #aa71c3;border-radius:15px;overflow:hidden}
+.banner{background:#ffae36;color:#2c1637;padding:14px;border-radius:14px;font-weight:900;text-align:center;font-size:22px}
+.certificate{background:#3d2b4a;border:5px double #ffcf6c;padding:20px;border-radius:14px;text-align:center}
+footer{color:#cbbbd7}
+.spot-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.camera-btn{background:linear-gradient(135deg,#8c52bd,#60389b);border-color:#d1a1f2}
+.camera-dialog{border:3px solid #ffbc50;background:#261a37;color:#fff5e6;border-radius:18px;width:min(94vw,460px);padding:18px}
+.camera-dialog::backdrop{background:#05020bc9}
+.camera-dialog h2{margin-top:0}
+#qrReader{width:100%;min-height:160px;overflow:hidden}
+#cameraStatus{font-size:14px;min-height:24px}
+@media(max-width:420px){.spot-actions .button,.spot-actions button{flex:1 1 100%}}
+</style></head><body>
 <header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
 <main><section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットにある<strong>クイズ用QRコード</strong>を読み取ると、その地点の問題と解答欄が表示されます。</p><div class="progressline"><span>正解した問題</span><strong id="correctText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="qr-info">🍬 3地点正解で「トリックオアトリート！」と言ってお菓子と交換しよう！<br>🏅 6地点すべて正解で東海道マスター！<br>💬 不正解でも何度でも挑戦できます。ヒントはポイントにいるスタッフに聞いてみよう！</div><p id="cloudStatus" class="muted" role="status">参加記録を確認しています…</p></section>
 <section id="quizPanel" class="panel hidden"><h2 id="quizTitle">現地クイズ</h2><div class="quiz-card"><p id="quizNotice" class="notice hidden"></p><p id="questionText"></p><form id="answerForm"><label for="answerInput"><strong>答えを入力してね</strong></label><input id="answerInput" required autocomplete="off" placeholder="ここに答えを入力"><button type="submit">答え合わせ！</button></form><p id="feedback" class="result" aria-live="polite"></p></div></section>
 <section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所周辺の6地点を表示しています。問題文は各地点のQRコードを読み取るまで表示されません。</p><div id="allMap"></div><div id="spotList" class="spotlist" style="margin-top:16px"></div></section>
 <section id="threePanel" class="panel hidden"><div class="banner">🎃 トリック・オア・トリート！ 👻</div><h2>3地点正解、おめでとう！</h2><p>「トリックオアトリート！」と言ってお菓子と交換しよう！</p><p id="prizeStatus"></p><a class="button" href="prize.html">🍬 景品交換ページへ</a><h2 style="margin-top:22px">東海道かわさき宿交流館周辺マップ</h2><div id="exchangeMap3" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div></section>
 <section id="sixPanel" class="panel hidden"><div class="certificate"><div style="font-size:38px">🏅 👻 🎃</div><h2>全問答えてくれてありがとう！</h2><p style="font-size:25px;font-weight:bold">あなたは東海道マスターだ！</p><div class="banner">表彰状が貰えるよ！</div></div><div id="exchangeMap6" style="height:300px;border:3px solid #7a3b24;border-radius:15px;margin-top:20px"></div><p><a class="button" href="prize.html">景品・表彰状の案内を見る</a></p></section>
-</main><footer>東海道川崎宿 ハロウィン・クイズラリー</footer>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script type="module">
+</main><dialog id="cameraDialog" class="camera-dialog" aria-labelledby="cameraTitle"><h2 id="cameraTitle">📷 QRコードを読み取る</h2><p id="cameraStatus" role="status">カメラを準備しています…</p><div id="qrReader"></div><p class="muted">スマートフォンのカメラ利用を許可してください。QRを読み取ると該当地点の問題が開きます。</p><button type="button" id="closeCamera" class="secondary">閉じる</button></dialog><footer>東海道川崎宿 ハロウィン・クイズラリー</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
 import {getAuth,signInAnonymously,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
 import {getFirestore,doc,getDoc,setDoc,onSnapshot,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
@@ -55,7 +84,14 @@ function render(){$('correctText').textContent=`${completed.length} / 6 問`;$('
 async function sync(){if(!db||!uid)return;try{await setDoc(doc(db,'participants',uid),{answered:completed,correct:completed,completed:completed,answeredCount:completed.length,correctCount:completed.length,updatedAt:serverTimestamp()},{merge:true});$('cloudStatus').textContent='☁️ 参加記録を保存しました。'}catch(e){$('cloudStatus').textContent='端末内に保存しました。Firebaseへの送信に失敗しました。'}}
 if(spot){$('quizPanel').classList.remove('hidden');$('quizTitle').textContent=`第${spot.id}問　${spot.name}`;$('questionText').textContent=spot.question;if(spot.id===2){$('quizNotice').textContent='【注意】お寺の中には入らないでね！お寺の外にあるかんばんを見て答えをさがそう！';$('quizNotice').classList.remove('hidden')}setTimeout(()=>$('quizPanel').scrollIntoView({block:'start',behavior:'smooth'}),250)}
 $('answerForm').addEventListener('submit',async e=>{e.preventDefault();if(!spot)return;const v=clean($('answerInput').value);if(!v)return;if(spot.answers.some(a=>clean(a)===v)){if(!completed.includes(spot.id))completed.push(spot.id);$('feedback').textContent='🎉 正解！ この地点をクリアしました！';$('answerForm').classList.add('hidden');saveLocal();await sync()}else{$('feedback').textContent='おしい！もう一度挑戦しよう！ヒントはポイントにいるスタッフに聞いてみよう！';$('answerInput').select()}});
-for(const s of spots){const div=document.createElement('div');div.className='spot-mini';const h=document.createElement('h3');h.textContent=s.id+'．'+s.name;const p=document.createElement('p');p.className='small';p.textContent=s.address;const state=document.createElement('p');state.dataset.spotStatus=s.id;const a=document.createElement('a');a.className='button maplink';a.textContent='📍 Googleマップで行き先を開く';a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' '+s.address);a.target='_blank';a.rel='noopener';div.append(h,p,state,a);$('spotList').append(div)}
+for(const s of spots){const div=document.createElement('div');div.className='spot-mini';const h=document.createElement('h3');h.textContent=s.id+'．'+s.name;const p=document.createElement('p');p.className='small';p.textContent=s.address;const state=document.createElement('p');state.dataset.spotStatus=s.id;const a=document.createElement('a');a.className='button maplink';a.textContent='📍 Googleマップで行き先を開く';a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' '+s.address);a.target='_blank';a.rel='noopener';const actions=document.createElement('div');actions.className='spot-actions';const camera=document.createElement('button');camera.type='button';camera.className='camera-btn';camera.textContent='📷 QRを読み取る';camera.setAttribute('aria-label',s.name+'のQRコードを読み取る');camera.addEventListener('click',()=>openCamera(s.id));actions.append(camera,a);div.append(h,p,state,actions);$('spotList').append(div)}
+
+let scanner=null,scanning=false;
+const cameraDialog=$('cameraDialog');
+function validSpotUrl(value){try{const u=new URL(value,location.href);if(u.origin!==location.origin||u.pathname!==location.pathname)return null;const n=Number(u.searchParams.get('spot'));return Number.isInteger(n)&&n>=1&&n<=6?n:null}catch{return null}}
+async function stopCamera(){if(scanner){try{if(scanning)await scanner.stop()}catch(e){}try{scanner.clear()}catch(e){}scanner=null;scanning=false}}
+async function openCamera(id){cameraDialog.showModal();$('cameraTitle').textContent=`📷 スポット${id}のQRを読み取る`;$('cameraStatus').textContent='カメラを準備しています…';if(!window.Html5Qrcode){$('cameraStatus').textContent='QR読み取り機能を読み込めませんでした。通信状態を確認してください。';return}try{await stopCamera();scanner=new Html5Qrcode('qrReader');await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230}},async decoded=>{const n=validSpotUrl(decoded);if(!n){$('cameraStatus').textContent='このクイズラリー用のQRコードを読み取ってください。';return}await stopCamera();cameraDialog.close();location.href='index.html?spot='+n},()=>{});scanning=true;$('cameraStatus').textContent='QRコードを枠内に映してください。'}catch(e){$('cameraStatus').textContent='カメラを起動できませんでした。HTTPS接続・カメラ許可・他のアプリでの使用状況をご確認ください。';await stopCamera()}}
+$('closeCamera').addEventListener('click',async()=>{await stopCamera();cameraDialog.close()});cameraDialog.addEventListener('cancel',e=>{e.preventDefault();$('closeCamera').click()});
 if(window.L){const m=L.map('allMap').setView([35.53091408,139.7030842],15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.53091408,139.7030842]).addTo(m).bindPopup('川崎市役所 本庁舎');spots.forEach(s=>L.marker([s.lat,s.lng]).addTo(m).bindPopup(`${s.id}. ${s.name}`))}
 const maps={};function initExchangeMaps(){if(!window.L)return;for(const [id,ok] of [['exchangeMap3',completed.length>=3],['exchangeMap6',completed.length>=6]]){if(!ok||maps[id])continue;const m=L.map(id).setView([35.5310,139.7000],16);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.5310,139.7000]).addTo(m).bindPopup('東海道かわさき宿交流館');maps[id]=m;setTimeout(()=>m.invalidateSize(),250)}}
 render();
