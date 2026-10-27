@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>東海道川崎宿 ハロウィン・クイズラリー</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>東海道川崎宿 ハロウィン・クイズラリー2026</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
 :root{--brown:#743f2b;--cream:#faf5ec;--ink:#2f2925;--green:#356b45;--muted:#70665f;--line:#e8ddd1}
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.7}
@@ -62,13 +62,13 @@ footer{color:#cbbbd7}
 #cameraStatus{font-size:14px;min-height:24px}
 @media(max-width:420px){.spot-actions .button,.spot-actions button{flex:1 1 100%}}
 </style></head><body>
-<header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
+<header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー2026</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
 <main><section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットにある<strong>クイズ用QRコード</strong>を読み取ると、その地点の問題と解答欄が表示されます。</p><div class="progressline"><span>正解した問題</span><strong id="correctText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="qr-info">🍬 3地点正解で「トリックオアトリート！」と言ってお菓子と交換しよう！<br>🏅 6地点すべて正解で東海道マスター！<br>💬 不正解でも何度でも挑戦できます。ヒントはポイントにいるスタッフに聞いてみよう！</div><p id="cloudStatus" class="muted" role="status">参加記録を確認しています…</p></section>
 <section id="quizPanel" class="panel hidden"><h2 id="quizTitle">現地クイズ</h2><div class="quiz-card"><p id="quizNotice" class="notice hidden"></p><p id="questionText"></p><form id="answerForm"><label for="answerInput"><strong>答えを入力してね</strong></label><input id="answerInput" required autocomplete="off" placeholder="ここに答えを入力"><button type="submit">答え合わせ！</button></form><p id="feedback" class="result" aria-live="polite"></p></div></section>
 <section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所周辺の6地点を表示しています。問題文は各地点のQRコードを読み取るまで表示されません。</p><div id="allMap"></div><div id="spotList" class="spotlist" style="margin-top:16px"></div></section>
 <section id="threePanel" class="panel hidden"><div class="banner">🎃 トリック・オア・トリート！ 👻</div><h2>3地点正解、おめでとう！</h2><p>「トリックオアトリート！」と言ってお菓子と交換しよう！</p><p id="prizeStatus"></p><a class="button" href="prize.html">🍬 景品交換ページへ</a><h2 style="margin-top:22px">東海道かわさき宿交流館周辺マップ</h2><div id="exchangeMap3" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div></section>
 <section id="sixPanel" class="panel hidden"><div class="certificate"><div style="font-size:38px">🏅 👻 🎃</div><h2>全問答えてくれてありがとう！</h2><p style="font-size:25px;font-weight:bold">あなたは東海道マスターだ！</p><div class="banner">表彰状が貰えるよ！</div></div><div id="exchangeMap6" style="height:300px;border:3px solid #7a3b24;border-radius:15px;margin-top:20px"></div><p><a class="button" href="prize.html">景品・表彰状の案内を見る</a></p></section>
-</main><dialog id="cameraDialog" class="camera-dialog" aria-labelledby="cameraTitle"><h2 id="cameraTitle">📷 QRコードを読み取る</h2><p id="cameraStatus" role="status">カメラを準備しています…</p><div id="qrReader"></div><p class="muted">スマートフォンのカメラ利用を許可してください。QRを読み取ると該当地点の問題が開きます。</p><button type="button" id="closeCamera" class="secondary">閉じる</button></dialog><footer>東海道川崎宿 ハロウィン・クイズラリー</footer>
+</main><dialog id="cameraDialog" class="camera-dialog" aria-labelledby="cameraTitle"><h2 id="cameraTitle">📷 QRコードを読み取る</h2><p id="cameraStatus" role="status">カメラを準備しています…</p><div id="qrReader"></div><p class="muted">スマートフォンのカメラ利用を許可してください。QRを読み取ると該当地点の問題が開きます。</p><button type="button" id="closeCamera" class="secondary">閉じる</button></dialog><footer>東海道川崎宿 ハロウィン・クイズラリー2026</footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
 import {getAuth,signInAnonymously,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
