@@ -70,22 +70,22 @@ footer{color:#cbbbd7}
 ruby rt{font-size:.62em;color:#ffdb91;font-weight:600}ruby{ruby-position:over}
 </style></head><body>
 <header><div class="eyebrow">東海道川崎宿・ハロウィン限定</div><h1>東海道川崎宿<br>ハロウィン・クイズラリー2026</h1><p>🎃 まちを歩いてクイズに答え、お菓子をゲットしよう！ 👻</p><p>2026年10月31日（土）｜参加無料</p></header>
-<main><section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットにある<strong>クイズ用QRコード</strong>を読み取ると、その地点の問題と解答欄が表示されます。</p><div class="progressline"><span>参加した問題</span><strong id="correctText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="qr-info">🍬 3地点参加で「トリックオアトリート！」と言ってお菓子と交換しよう！<br>🏅 6地点すべて参加で東海道マスター！<br>💬 不正解でも何度でも挑戦できます。ヒントはポイントにいるスタッフに聞いてみよう！</div><p id="cloudStatus" class="muted" role="status">参加記録を確認しています…</p></section>
+<main><section class="panel"><h2>🕯 クイズラリーに挑戦！</h2><p>各スポットにある<strong>クイズ用QRコード</strong>を読み取ると、その地点の問題と解答欄が表示されます。</p><div class="progressline"><span>参加した問題</span><strong id="correctText">0 / 6 問</strong></div><div class="track"><div id="progressBar"></div></div><div class="qr-info">🍬 正解・不正解に関係なく3地点で回答すれば「トリックオアトリート！」と言ってお菓子と交換しよう！<br>🏅 正解・不正解に関係なく6地点すべてで回答すると東海道マスター！<br>💬 不正解でも何度でも挑戦できます。ヒントはポイントにいるスタッフに聞いてみよう！</div><p id="cloudStatus" class="muted" role="status">参加記録を確認しています…</p></section>
 <section id="quizPanel" class="panel hidden"><h2 id="quizTitle">現地クイズ</h2><div class="quiz-card"><p id="quizNotice" class="notice hidden"></p><p id="questionText"></p><form id="answerForm"><label for="answerInput"><strong>答えを入力してね</strong></label><input id="answerInput" required autocomplete="off" placeholder="ここに答えを入力"><button type="submit">答え合わせ！</button></form><p id="feedback" class="result" aria-live="polite"></p></div></section>
-<section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所周辺の6地点を表示しています。問題文は各地点のQRコードを読み取るまで表示されません。</p><div id="allMap"></div><div id="spotList" class="spotlist" style="margin-top:16px"></div></section>
-<section id="threePanel" class="panel hidden"><div class="banner">🎃 トリック・オア・トリート！ 👻</div><h2>3地点参加、おめでとう！</h2><p>「トリックオアトリート！」と言ってお菓子と交換しよう！</p><p id="prizeStatus"></p><a class="button" href="prize.html">🍬 景品交換ページへ</a><h2 style="margin-top:22px">東海道かわさき宿交流館周辺マップ</h2><div id="exchangeMap3" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div></section>
-<section id="sixPanel" class="panel hidden"><div class="certificate"><div style="font-size:38px">🏅 👻 🎃</div><h2>全問答えてくれてありがとう！</h2><p style="font-size:25px;font-weight:bold">あなたは東海道マスターだ！</p><div class="banner">表彰状が貰えるよ！</div></div><div id="exchangeMap6" style="height:300px;border:3px solid #7a3b24;border-radius:15px;margin-top:20px"></div><p><a class="button" href="prize.html">景品・表彰状の案内を見る</a></p></section>
-</main><dialog id="cameraDialog" class="camera-dialog" aria-labelledby="cameraTitle"><h2 id="cameraTitle">📷 QRコードを読み取る</h2><p id="cameraStatus" role="status">カメラを準備しています…</p><div id="qrReader"></div><p class="muted">スマートフォンのカメラ利用を許可してください。QRを読み取ると該当地点の問題が開きます。</p><button type="button" id="closeCamera" class="secondary">閉じる</button></dialog><footer>東海道川崎宿 ハロウィン・クイズラリー2026</footer>
+<section class="panel"><h2>🗺 クイズスポットマップ</h2><p>川崎市役所周辺の6地点の目安を表示しています。正確な場所は各地点のGoogleマップで確認してください。地図のピンは目安です。正確な場所は各地点の「Googleマップで行き先を開く」で確認してください。問題文は各地点のQRコードを読み取るまで表示されません。</p><div id="allMap"></div><div id="spotList" class="spotlist" style="margin-top:16px"></div></section>
+<section id="threePanel" class="panel hidden"><div class="banner">🎃 トリック・オア・トリート！ 👻</div><h2>3地点で回答、おめでとう！</h2><p>正解・不正解に関係なく、異なる3地点で回答すると景品交換の対象になります。</p><p>「トリックオアトリート！」と言ってお菓子と交換しよう！</p><p id="prizeStatus"></p><a class="button" href="prize.html">🍬 景品交換ページへ</a><h2 style="margin-top:22px">東海道かわさき宿交流館周辺マップ</h2><div id="exchangeMap3" style="height:300px;border:3px solid #7a3b24;border-radius:15px"></div></section>
+<section id="sixPanel" class="panel hidden"><div class="certificate"><div style="font-size:38px">🏅 👻 🎃</div><h2>全問答えてくれてありがとう！</h2><p style="font-size:25px;font-weight:bold">あなたは東海道マスターだ！</p><div class="banner">東海道マスター認定！</div><p>異なる6地点で回答すると認定されます（正解・不正解は問いません）。</p><p>表彰状の受取場所・方法は景品交換所のスタッフに確認してください。</p></div><div id="exchangeMap6" style="height:300px;border:3px solid #7a3b24;border-radius:15px;margin-top:20px"></div><p><a class="button" href="prize.html">景品・表彰状の案内を見る</a></p></section>
+</main><dialog id="cameraDialog" class="camera-dialog" aria-labelledby="cameraTitle"><h2 id="cameraTitle">📷 QRコードを読み取る</h2><p id="cameraStatus" role="status">カメラを準備しています…</p><div id="qrReader"></div><p class="muted">スマートフォンのカメラ利用を許可してください。読み取れない場合はスマートフォン標準のカメラでQRコードを開くか、QR画像を選択してください。</p><label for="qrImageFile" class="button">🖼 QR画像を選んで読み取る</label><input id="qrImageFile" type="file" accept="image/*" style="max-width:100%;font-size:13px"><button type="button" id="closeCamera" class="secondary">閉じる</button></dialog><footer>東海道川崎宿 ハロウィン・クイズラリー2026</footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
 import {getAuth,signInAnonymously,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
 import {getFirestore,doc,getDoc,setDoc,onSnapshot,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
 import {firebaseConfig} from './firebase-config.js';
-const spots=[{"id": 1, "name": "坂本九の歌碑", "address": "JR川崎駅東口駅広場", "question": "JR川崎駅の東海道線ホームの発車メロディにもなっている、坂本九さんの有名な曲は何でしょう。", "answers": ["上を向いて歩こう", "うえをむいてあるこう"], "lat": 35.5308, "lng": 139.6975}, {"id": 2, "name": "宗三寺", "address": "神奈川県川崎市川崎区砂子1丁目4-3", "question": "【注意】お寺の中には入らないでね！お寺の外にあるかんばんを見て答えをさがそう！宗三寺の前にある案内板によると、昔の本に書かれているこのお寺のお仏像のおおよその大きさ（長さ）は「何尺」でしょう？", "answers": ["一尺", "1尺", "いっしゃく", "いちしゃく"], "lat": 35.5315, "lng": 139.7}, {"id": 3, "name": "一行寺", "address": "神奈川県川崎市川崎区本町1丁目", "question": "東海道沿いにある老舗の和菓子店「東照」で再現されている、江戸時代に川崎宿の名物だった料理は何でしょう。", "answers": ["奈良茶飯", "奈良茶飯風おこわ", "ならちゃめし", "ならちゃめしふうおこわ"], "lat": 35.531, "lng": 139.699}, {"id": 4, "name": "東海道かわさき宿交流館", "address": "神奈川県川崎市川崎区本町1丁目8-4", "question": "「東海道かわさき宿交流館」のキャラクターで、むかしの手紙をとどける「飛脚」のおじさんのなまえは何でしょう？", "answers": ["六さん", "飛脚の六さん", "六助", "ろくさん", "ひきゃくのろくさん", "ろくすけ"], "lat": 35.531, "lng": 139.7}, {"id": 5, "name": "妙遠寺", "address": "神奈川県川崎市川崎区宮前町6-5", "question": "川崎のまちを流れる用水で、妙遠寺にゆかりのある小泉次大夫が完成させた、神奈川県で最も古い用水の名前は何でしょう。", "answers": ["二ヶ領用水", "二ケ領用水", "二か領用水", "にかりょうようすい"], "lat": 35.5265, "lng": 139.703}, {"id": 6, "name": "佐藤本陣跡", "address": "神奈川県川崎市川崎区砂子2丁目", "question": "川崎でうまれた詩人の佐藤惣之助さんがつくった、プロ野球チーム「阪神タイガース」のおうえん歌のなまえは何でしょう？", "answers": ["六甲おろし", "阪神タイガースの歌", "ろっこうおろし", "はんしんたいがーすのうた"], "lat": 35.529, "lng": 139.7}];
+const spots=[{"id": 1, "name": "坂本九の歌碑", "address": "JR川崎駅東口駅広場", "question": "JR川崎駅の東海道線ホームの発車メロディにもなっている、坂本九さんの有名な曲は何でしょう。", "answers": ["上を向いて歩こう", "うえをむいてあるこう"], "lat": 35.5308, "lng": 139.6975}, {"id": 2, "name": "宗三寺", "address": "神奈川県川崎市川崎区砂子1丁目4-3", "question": "宗三寺の前にある案内板によると、昔の本に書かれているこのお寺のお仏像のおおよその大きさ（長さ）は「何尺」でしょう？", "answers": ["一尺", "1尺", "いっしゃく", "いちしゃく"], "lat": 35.5315, "lng": 139.7}, {"id": 3, "name": "一行寺", "address": "神奈川県川崎市川崎区本町1-4-1", "question": "東海道沿いにある老舗の和菓子店「東照」で再現されている、江戸時代に川崎宿の名物だった料理は何でしょう。", "answers": ["奈良茶飯", "奈良茶飯風おこわ", "ならちゃめし", "ならちゃめしふうおこわ"], "lat": 35.531, "lng": 139.699}, {"id": 4, "name": "東海道かわさき宿交流館", "address": "神奈川県川崎市川崎区本町1丁目8-4", "question": "「東海道かわさき宿交流館」のキャラクターで、むかしの手紙をとどける「飛脚」のおじさんのなまえは何でしょう？", "answers": ["六さん", "飛脚の六さん", "六助", "ろくさん", "ひきゃくのろくさん", "ろくすけ"], "lat": 35.531, "lng": 139.7}, {"id": 5, "name": "妙遠寺", "address": "神奈川県川崎市川崎区宮前町6-5", "question": "川崎のまちを流れる用水で、妙遠寺にゆかりのある小泉次大夫が完成させた、神奈川県で最も古い用水の名前は何でしょう。", "answers": ["二ヶ領用水", "二ケ領用水", "二か領用水", "にかりょうようすい"], "lat": 35.5265, "lng": 139.703}, {"id": 6, "name": "佐藤本陣跡", "address": "神奈川県川崎市川崎区砂子2丁目", "question": "川崎でうまれた詩人の佐藤惣之助さんがつくった、プロ野球チーム「阪神タイガース」のおうえん歌のなまえは何でしょう？", "answers": ["六甲おろし", "阪神タイガースの歌", "ろっこうおろし", "はんしんたいがーすのうた"], "lat": 35.529, "lng": 139.7}];
 const KEY='kawasakiQuizCompleted',OLD='kawasakiQuizAnswered',ATTENDED_KEY='kawasakiQuizAttended';const $=id=>document.getElementById(id);
 const clean=v=>String(v).normalize('NFKC').replace(/[\s　・･]/g,'').replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60)).toLowerCase();
 function loadIds(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?[...new Set(v.map(Number))].filter(n=>Number.isInteger(n)&&n>=1&&n<=6):[]}catch{return []}}
-let completed=loadIds(KEY),attended=[...new Set([...loadIds(ATTENDED_KEY),...completed])],db=null,uid=null,closed=false;
+let completed=loadIds(KEY),attended=[...new Set([...loadIds(ATTENDED_KEY),...loadIds(OLD),...completed])],db=null,uid=null,closed=false;
 const spot=spots.find(s=>s.id===Number(new URLSearchParams(location.search).get('spot')));
 function saveLocal(){completed.sort((a,b)=>a-b);attended.sort((a,b)=>a-b);localStorage.setItem(KEY,JSON.stringify(completed));localStorage.setItem(OLD,JSON.stringify(attended));localStorage.setItem(ATTENDED_KEY,JSON.stringify(attended));render()}
 function render(){
@@ -101,7 +101,7 @@ async function sync(){if(!db||!uid)return;try{await setDoc(doc(db,'participants'
 const readings={
   1:[['JR川崎駅','ジェイアールかわさきえき'],['東海道線','とうかいどうせん'],['坂本九','さかもときゅう'],['有名','ゆうめい'],['曲','きょく'],['何','なん']],
   2:[['注意','ちゅうい'],['お寺','おてら'],['中','なか'],['入','はい'],['外','そと'],['見','み'],['答','こた'],['宗三寺','そうさんじ'],['前','まえ'],['案内板','あんないばん'],['昔','むかし'],['本','ほん'],['書','か'],['お仏像','おぶつぞう'],['大きさ','おおきさ'],['長さ','ながさ'],['何尺','なんしゃく']],
-  3:[['東海道','とうかいどう'],['沿','ぞ'],['老舗','しにせ'],['和菓子店','わがしてん'],['東照','とうしょう'],['再現','さいげん'],['江戸時代','えどじだい'],['川崎宿','かわさきしゅく'],['名物','めいぶつ'],['料理','りょうり'],['何','なん']],
+  3:[['東海道','とうかいどう'],['沿','ぞ'],['老舗','しにせ'],['和菓子店','わがしてん'],['東照','とうてる'],['再現','さいげん'],['江戸時代','えどじだい'],['川崎宿','かわさきしゅく'],['名物','めいぶつ'],['料理','りょうり'],['何','なん']],
   4:[['東海道','とうかいどう'],['宿交流館','しゅくこうりゅうかん'],['手紙','てがみ'],['飛脚','ひきゃく'],['何','なん']],
   5:[['川崎','かわさき'],['流','なが'],['用水','ようすい'],['妙遠寺','みょうおんじ'],['小泉次大夫','こいずみじだゆう'],['完成','かんせい'],['神奈川県','かながわけん'],['最も','もっとも'],['古い','ふるい'],['名前','なまえ'],['何','なん']],
   6:[['川崎','かわさき'],['詩人','しじん'],['佐藤惣之助','さとうそうのすけ'],['野球','やきゅう'],['阪神','はんしん'],['歌','うた'],['何','なん']]
@@ -133,16 +133,59 @@ $('answerForm').addEventListener('submit',async e=>{
  saveLocal();await sync();
  if(!correct){$('answerInput').select()}else{$('answerInput').value=''}
 });
-for(const s of spots){const div=document.createElement('div');div.className='spot-mini';const h=document.createElement('h3');h.textContent=s.id+'．'+s.name;const p=document.createElement('p');p.className='small';p.textContent=s.address;const state=document.createElement('p');state.dataset.spotStatus=s.id;const a=document.createElement('a');a.className='button maplink';a.textContent='📍 Googleマップで行き先を開く';a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' '+s.address);a.target='_blank';a.rel='noopener';const actions=document.createElement('div');actions.className='spot-actions';const camera=document.createElement('button');camera.type='button';camera.className='camera-btn';camera.textContent='📷 QRを読み取る';camera.setAttribute('aria-label',s.name+'のQRコードを読み取る');camera.addEventListener('click',()=>openCamera(s.id));actions.append(camera,a);div.append(h,p,state,actions);$('spotList').append(div)}
+for(const s of spots){const div=document.createElement('div');div.className='spot-mini';const h=document.createElement('h3');h.textContent=s.id+'．'+s.name;const p=document.createElement('p');p.className='small';p.textContent=s.address;const state=document.createElement('p');state.dataset.spotStatus=s.id;const a=document.createElement('a');a.className='button maplink';a.textContent='📍 Googleマップで行き先を開く';a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.address+' '+s.name);a.target='_blank';a.rel='noopener';const actions=document.createElement('div');actions.className='spot-actions';const camera=document.createElement('button');camera.type='button';camera.className='camera-btn';camera.textContent='📷 QRを読み取る';camera.setAttribute('aria-label',s.name+'のQRコードを読み取る');camera.addEventListener('click',()=>openCamera(s.id));actions.append(camera,a);div.append(h,p,state,actions);$('spotList').append(div)}
 
-let scanner=null,scanning=false;
+let scanner=null,scanning=false,starting=false,queuedQr=null;
 const cameraDialog=$('cameraDialog');
-function validSpotUrl(value){try{const u=new URL(value,location.href);if(u.origin!==location.origin||u.pathname!==location.pathname)return null;const n=Number(u.searchParams.get('spot'));return Number.isInteger(n)&&n>=1&&n<=6?n:null}catch{return null}}
-async function stopCamera(){if(scanner){try{if(scanning)await scanner.stop()}catch(e){}try{scanner.clear()}catch(e){}scanner=null;scanning=false}}
-async function openCamera(id){cameraDialog.showModal();$('cameraTitle').textContent=`📷 スポット${id}のQRを読み取る`;$('cameraStatus').textContent='カメラを準備しています…';if(!window.Html5Qrcode){$('cameraStatus').textContent='QR読み取り機能を読み込めませんでした。通信状態を確認してください。';return}try{await stopCamera();scanner=new Html5Qrcode('qrReader');await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230}},async decoded=>{const n=validSpotUrl(decoded);if(!n){$('cameraStatus').textContent='このクイズラリー用のQRコードを読み取ってください。';return}await stopCamera();cameraDialog.close();location.href='index.html?spot='+n},()=>{});scanning=true;$('cameraStatus').textContent='QRコードを枠内に映してください。'}catch(e){$('cameraStatus').textContent='カメラを起動できませんでした。HTTPS接続・カメラ許可・他のアプリでの使用状況をご確認ください。';await stopCamera()}}
-$('closeCamera').addEventListener('click',async()=>{await stopCamera();cameraDialog.close()});cameraDialog.addEventListener('cancel',e=>{e.preventDefault();$('closeCamera').click()});
+function validSpotUrl(value){
+ try{
+  const raw=String(value).trim();
+  // QRコードが完全URLの場合と、?spot=1 などの相対URLの場合に対応。
+  const u=new URL(raw,location.href);
+  const sameSite=u.origin===location.origin;
+  const basePath=location.pathname.replace(/(?:index\.html)?\/?$/,'/');
+  const targetPath=u.pathname.replace(/(?:index\.html)?\/?$/,'/');
+  const official=new URL('https://wqu06349e-debug.github.io/kawasaki-quiz-rally/');
+  const officialPath=u.origin===official.origin && targetPath===official.pathname;
+  if(!((sameSite&&basePath===targetPath)||officialPath))return null;
+  const param=u.searchParams.get('spot');
+  if(param===null||!/^[1-6]$/.test(param))return null;
+  const n=Number(param);
+  return Number.isInteger(n)&&n>=1&&n<=6?n:null;
+ }catch{return null}
+}
+async function stopCamera(){if(scanner){const old=scanner;scanner=null;try{if(scanning)await old.stop()}catch(e){}try{old.clear()}catch(e){}scanning=false;starting=false;queuedQr=null}}
+async function handleQr(decoded){
+ if(starting){queuedQr=decoded;return}
+ const n=validSpotUrl(decoded);
+ if(!n){$('cameraStatus').textContent='このクイズラリーのQRコードではないようです。標準カメラでもお試しください。';return}
+ await stopCamera();if(cameraDialog.open)cameraDialog.close();location.href='index.html?spot='+n;
+}
+async function openCamera(id){
+ cameraDialog.showModal();$('cameraTitle').textContent=`📷 スポット${id}のQRを読み取る`;
+ $('cameraStatus').textContent='カメラを準備しています…';
+ if(!window.Html5Qrcode){$('cameraStatus').textContent='読み取りライブラリを読み込めませんでした。標準カメラでQRを開いてください。';return}
+ try{
+  await stopCamera();scanner=new Html5Qrcode('qrReader');
+  starting=true;
+  await scanner.start({facingMode:'environment'},{fps:10,qrbox:(w,h)=>{const size=Math.max(80,Math.min(250,Math.floor(Math.min(w,h)*.8)));return {width:size,height:size}}},handleQr,()=>{});scanning=true;starting=false;$('cameraStatus').textContent='QRコード全体が枠に収まるように映してください。';if(queuedQr){const decoded=queuedQr;queuedQr=null;await handleQr(decoded)};
+ }catch(e){starting=false;$('cameraStatus').textContent='カメラを起動できませんでした。カメラ許可・HTTPS接続を確認するか、標準カメラでQRを開いてください。';await stopCamera()}
+}
+$('qrImageFile').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ $('cameraStatus').textContent='QR画像を確認しています…';
+ try{
+  await stopCamera();
+  if(!window.Html5Qrcode)throw Error('QR読み取りライブラリが利用できません');
+  const reader=new Html5Qrcode('qrReader');
+  let decoded;try{decoded=await reader.scanFile(file,true)}finally{try{reader.clear()}catch(e){}}
+  await handleQr(decoded);
+ }catch(e){$('cameraStatus').textContent='画像から読み取れませんでした。QRコード全体が鮮明に写った画像を選んでください。'}
+ e.target.value='';
+});
+$('closeCamera').addEventListener('click',async()=>{await stopCamera();if(cameraDialog.open)cameraDialog.close()});cameraDialog.addEventListener('cancel',e=>{e.preventDefault();$('closeCamera').click()});
 if(window.L){const m=L.map('allMap').setView([35.53091408,139.7030842],15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.53091408,139.7030842]).addTo(m).bindPopup('川崎市役所 本庁舎');spots.forEach(s=>L.marker([s.lat,s.lng]).addTo(m).bindPopup(`${s.id}. ${s.name}`))}
 const maps={};function initExchangeMaps(){if(!window.L)return;for(const [id,ok] of [['exchangeMap3',attended.length>=3],['exchangeMap6',attended.length>=6]]){if(!ok||maps[id])continue;const m=L.map(id).setView([35.5310,139.7000],16);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(m);L.marker([35.5310,139.7000]).addTo(m).bindPopup('東海道かわさき宿交流館');maps[id]=m;setTimeout(()=>m.invalidateSize(),250)}}
 render();
-try{if(!firebaseConfig?.apiKey||String(firebaseConfig.apiKey).startsWith('PASTE_'))throw Error('Firebase未設定');const app=initializeApp(firebaseConfig),auth=getAuth(app);db=getFirestore(app);onAuthStateChanged(auth,async user=>{if(!user){try{await signInAnonymously(auth)}catch(e){$('cloudStatus').textContent='Firebaseの匿名ログインを確認してください。'}return}uid=user.uid;try{const snap=await getDoc(doc(db,'participants',uid));if(snap.exists()){const d=snap.data();const remote=Array.isArray(d.correct)?d.correct:Array.isArray(d.completed)?d.completed:[];const remoteAttended=Array.isArray(d.attended)?d.attended:Array.isArray(d.answered)?d.answered:remote;completed=[...new Set([...completed,...remote.map(Number)])].filter(n=>Number.isInteger(n)&&n>=1&&n<=6);attended=[...new Set([...attended,...remoteAttended.map(Number),...completed])].filter(n=>Number.isInteger(n)&&n>=1&&n<=6);saveLocal()}await sync()}catch(e){$('cloudStatus').textContent='オンライン参加記録を読み込めませんでした。'}});onSnapshot(doc(db,'settings','event'),snap=>{closed=snap.exists()&&snap.data().prizeClosed===true;render()});}catch(e){$('cloudStatus').textContent='端末内に進捗を保存しています。Firebase設定を確認してください。'}
+try{if(!firebaseConfig?.apiKey||String(firebaseConfig.apiKey).startsWith('PASTE_'))throw Error('Firebase未設定');const app=initializeApp(firebaseConfig),auth=getAuth(app);db=getFirestore(app);onAuthStateChanged(auth,async user=>{if(!user){try{await signInAnonymously(auth)}catch(e){$('cloudStatus').textContent='Firebaseの匿名ログインを確認してください。'}return}uid=user.uid;try{const snap=await getDoc(doc(db,'participants',uid));if(snap.exists()){const d=snap.data();const remote=Array.isArray(d.correct)?d.correct:Array.isArray(d.completed)?d.completed:[];const remoteAttended=Array.isArray(d.attended)?d.attended:Array.isArray(d.answered)?d.answered:remote;completed=[...new Set([...completed,...remote.map(Number)])].filter(n=>Number.isInteger(n)&&n>=1&&n<=6);attended=[...new Set([...attended,...remoteAttended.map(Number),...completed])].filter(n=>Number.isInteger(n)&&n>=1&&n<=6);saveLocal()}await sync()}catch(e){$('cloudStatus').textContent='オンライン参加記録を読み込めませんでした。'}});onSnapshot(doc(db,'settings','event'),snap=>{closed=snap.exists()&&snap.data().prizeClosed===true;render()},()=>{$('prizeStatus').textContent='景品の受付状況はスタッフにご確認ください。'});}catch(e){$('cloudStatus').textContent='端末内に進捗を保存しています。Firebase設定を確認してください。'}
 </script></body></html>
