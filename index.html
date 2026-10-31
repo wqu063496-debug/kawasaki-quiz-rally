@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -27,6 +27,11 @@ input{width:100%;padding:13px;font-size:17px;border-radius:10px;border:2px solid
 .result{font-size:22px;font-weight:bold;color:#ffd06b}
 ruby rt{font-size:.6em;color:#ffdc92}
 footer{text-align:center;padding:25px;color:#c9bad1}
+dialog{width:min(94vw,520px);max-height:90vh;overflow:auto;background:#30223f;color:#fff4df;border:2px solid #ffbd61;border-radius:16px;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.8)}
+#qrReader{width:100%;min-height:230px;background:#15101c;border-radius:12px;overflow:hidden}
+#qrReader video{width:100%!important;max-height:65vh;object-fit:cover}
+#cameraStatus{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -86,6 +91,13 @@ footer{text-align:center;padding:25px;color:#c9bad1}
 </section>
 
 </main>
+
+<dialog id="cameraDialog" aria-labelledby="cameraTitle">
+<h2 id="cameraTitle">📷 QRコードを読み取る</h2>
+<p id="cameraStatus" role="status">カメラを準備しています…</p>
+<div id="qrReader"></div>
+<button id="closeCamera" type="button">✖ カメラを閉じる</button>
+</dialog>
 
 <footer>東海道川崎宿ハロウィン・クイズラリー2026</footer>
 
@@ -266,16 +278,77 @@ await sync();
 if(ok)$("answerInput").value="";
 });
 
-const readerBox=document.createElement("div");
-readerBox.id="qrReader";
-readerBox.style.display="none";
-document.body.appendChild(readerBox);
+const cameraDialog=$("cameraDialog");
+let scanner=null;
+let cameraStarting=false;
+let cameraRunning=false;
+let cameraBusy=false;
+let pendingResult=null;
+let cameraGeneration=0;
 
-const qrInput=document.createElement("input");
-qrInput.type="file";
-qrInput.accept="image/*";
-qrInput.style.display="none";
-document.body.appendChild(qrInput);
+async function stopCamera(){
+  cameraGeneration++;
+  const old=scanner;
+  scanner=null;
+  cameraStarting=false;
+  cameraRunning=false;
+  pendingResult=null;
+  if(!old)return;
+  try{if(old.isScanning)await old.stop()}catch(e){console.warn("カメラ終了:",e)}
+  try{old.clear()}catch(e){console.warn("リーダー解放:",e)}
+}
+
+async function handleQr(decoded){
+  if(cameraStarting){pendingResult=decoded;return}
+  if(cameraBusy||!cameraRunning)return;
+  const id=validQr(decoded);
+  if(!id){$("cameraStatus").textContent="このイベントのQRコードではありません。別のQRコードを映してください。";return}
+  cameraBusy=true;
+  $("cameraStatus").textContent="読み取り成功！クイズを開いています…";
+  await stopCamera();
+  location.href="index.html?spot="+id;
+}
+
+async function openCamera(){
+  if(cameraBusy||cameraStarting||cameraRunning)return;
+  if(!window.isSecureContext){alert("カメラを使うにはHTTPSでサイトを開いてください。");return}
+  if(!navigator.mediaDevices?.getUserMedia){alert("このブラウザではカメラを利用できません。SafariやChromeで開いてください。");return}
+  if(!window.Html5Qrcode){alert("QR読み取り機能を読み込めませんでした。通信状態を確認してください。");return}
+  cameraBusy=false;
+  cameraStarting=true;
+  const generation=++cameraGeneration;
+  $("cameraStatus").textContent="カメラを準備しています。アクセスを許可してください。";
+  try{
+    if(!cameraDialog.open)cameraDialog.showModal();
+    const current=new Html5Qrcode("qrReader",{verbose:false});
+    scanner=current;
+    await current.start(
+      {facingMode:"environment"},
+      {fps:10,qrbox:(w,h)=>{const n=Math.max(100,Math.min(270,Math.floor(Math.min(w,h)*.8)));return {width:n,height:n}}},
+      decoded=>{void handleQr(decoded)},
+      ()=>{}
+    );
+    if(generation!==cameraGeneration||!cameraDialog.open){
+      try{await current.stop()}catch(e){}
+      try{current.clear()}catch(e){}
+      return;
+    }
+    cameraStarting=false;
+    cameraRunning=true;
+    $("cameraStatus").textContent="現地のQRコードを枠内に映してください。";
+    if(pendingResult){const result=pendingResult;pendingResult=null;await handleQr(result)}
+  }catch(e){
+    console.error("カメラ起動:",e);
+    if(generation===cameraGeneration){
+      $("cameraStatus").textContent="カメラを起動できませんでした。ブラウザのカメラ許可を確認し、もう一度お試しください。";
+      await stopCamera();
+    }
+  }
+}
+
+$("closeCamera").addEventListener("click",()=>cameraDialog.close());
+cameraDialog.addEventListener("close",()=>{void stopCamera()});
+window.addEventListener("pagehide",()=>{void stopCamera()});
 
 function validQr(text){
 try{
@@ -287,32 +360,6 @@ const value=u.searchParams.get("spot");
 return /^[1-6]$/.test(value||"")?Number(value):null;
 }catch{return null}
 }
-
-qrInput.addEventListener("change",async()=>{
-const file=qrInput.files?.[0];
-if(!file)return;
-
-try{
-if(!window.Html5Qrcode)throw Error("読み取りライブラリがありません");
-const scanner=new Html5Qrcode("qrReader");
-let text;
-try{
-text=await scanner.scanFile(file,true);
-}finally{
-try{scanner.clear()}catch(e){}
-}
-const spotId=validQr(text);
-if(!spotId){
-alert("このクイズラリーのQRコードではありません。");
-return;
-}
-location.href="index.html?spot="+spotId;
-}catch(error){
-alert("QRコードを読み取れませんでした。鮮明なQR画像を選択してください。");
-}finally{
-qrInput.value="";
-}
-});
 
 for(const s of spots){
 const div=document.createElement("div");
@@ -330,8 +377,8 @@ status.dataset.status=s.id;
 
 const button=document.createElement("button");
 button.type="button";
-button.textContent="🖼 QRコードを読み取る";
-button.addEventListener("click",()=>qrInput.click());
+button.textContent="📷 QRコードを読み取る";
+button.addEventListener("click",()=>{void openCamera()});
 
 const mapLink=document.createElement("a");
 mapLink.className="button";
