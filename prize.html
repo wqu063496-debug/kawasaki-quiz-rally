@@ -4,132 +4,117 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>景品交換・アンケート｜東海道川崎宿ハロウィン・クイズラリー2026</title>
+<title>アンケート・景品交換｜東海道川崎宿ハロウィン・クイズラリー2026</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  background: #243d46;
-  color: #24170f;
-  font-family: "Yu Mincho","Hiragino Mincho ProN",serif;
-  line-height: 1.8;
+body{
+  margin:0;
+  background:#243d46;
+  color:#24170f;
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+  line-height:1.8;
 }
 
-header {
-  text-align: center;
-  padding: 25px 12px;
-  background: linear-gradient(#fff5d9,#f4dfb9);
-  border-bottom: 7px solid #d84b20;
+header{
+  text-align:center;
+  padding:25px 12px;
+  background:linear-gradient(#fff5d9,#f4dfb9);
+  border-bottom:7px solid #d84b20;
 }
 
-h1 {
-  font-size: clamp(24px,6vw,40px);
+h1{
+  font-size:clamp(24px,6vw,40px);
 }
 
-main {
-  max-width: 780px;
-  margin: 24px auto;
-  padding: 0 12px;
+main{
+  max-width:780px;
+  margin:24px auto;
+  padding:0 12px;
 }
 
-.panel {
-  background: #fff5d9;
-  border: 3px solid #a74b25;
-  border-radius: 20px;
-  padding: 22px;
-  margin: 18px 0;
-  box-shadow: 0 7px 0 #401b22;
+.panel{
+  background:#fff5d9;
+  border:3px solid #a74b25;
+  border-radius:18px;
+  padding:20px;
+  margin:18px 0;
 }
 
-h2 {
-  color: #54205d;
+h2{
+  color:#54205d;
 }
 
-.hidden {
-  display: none !important;
+.hidden{
+  display:none!important;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin: 18px 0 6px;
+label{
+  display:block;
+  font-weight:bold;
+  margin:18px 0 6px;
 }
 
-select,
-textarea {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #c9a36a;
-  border-radius: 10px;
-  font-size: 16px;
-  background: white;
+select,textarea{
+  width:100%;
+  padding:12px;
+  border:2px solid #c9a36a;
+  border-radius:10px;
+  font-size:16px;
+  background:white;
 }
 
-textarea {
-  min-height: 120px;
+textarea{
+  min-height:110px;
 }
 
-button,
-.button {
-  display: inline-block;
-  border: 2px solid #8f2e19;
-  border-radius: 999px;
-  padding: 12px 18px;
-  background: #cb4b23;
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 10px 0;
+button,.button{
+  display:inline-block;
+  border:2px solid #8f2e19;
+  border-radius:999px;
+  padding:12px 18px;
+  background:#cb4b23;
+  color:white;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:10px 0;
 }
 
-button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
+button:disabled{
+  opacity:.6;
 }
 
-.notice {
-  padding: 14px;
-  border-radius: 12px;
-  background: #ffebbd;
-  border: 2px dashed #d98a2e;
+.notice{
+  padding:14px;
+  border-radius:12px;
+  background:#ffebbd;
+  border:2px dashed #d98a2e;
 }
 
-.banner {
-  text-align: center;
-  background: #54205d;
-  color: #fff4a8;
-  padding: 18px;
-  border-radius: 14px;
-  font-size: clamp(22px,5vw,34px);
-  font-weight: bold;
+.banner{
+  text-align:center;
+  background:#54205d;
+  color:#fff4a8;
+  padding:16px;
+  border-radius:14px;
+  font-size:clamp(22px,5vw,34px);
+  font-weight:bold;
 }
 
-.error {
-  color: #a01818;
+.error{
+  color:#a01818;
+  overflow-wrap:anywhere;
 }
 
-.success {
-  color: #17612c;
-}
-
-.info {
-  background: #fff0cc;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 12px 0;
-}
-
-footer {
-  text-align: center;
-  color: #fff2d4;
-  padding: 24px;
+footer{
+  text-align:center;
+  color:#fff2d4;
+  padding:24px;
 }
 </style>
 </head>
@@ -137,65 +122,44 @@ footer {
 <body>
 
 <header>
-  <div>
-    🎃 東海道川崎宿 ハロウィン・クイズラリー2026
-  </div>
-  <h1>🍬 景品交換ページ 🍬</h1>
+  <div>🎃 東海道川崎宿ハロウィン・クイズラリー2026</div>
+  <h1>📝 アンケート・景品交換</h1>
 </header>
 
 <main>
 
-<!-- 読み込み画面 -->
 <section id="loading" class="panel">
-  <h2>参加記録を確認しています…</h2>
+  <h2>記録を確認しています…</h2>
   <p id="loadingText">少々お待ちください。</p>
 </section>
 
-<!-- エラー画面 -->
-<section id="errorPanel" class="panel hidden">
-  <h2>⚠️ 参加記録を確認できませんでした</h2>
+<section id="completed" class="panel hidden">
+  <h2>🎉 アンケートの回答ありがとうございます！</h2>
 
-  <p id="errorText" class="error"></p>
+  <p>アンケートの送信が完了しました。</p>
+
+  <p id="completedText"></p>
 
   <div class="notice">
-    通信状態を確認して、もう一度お試しください。
-    何度も失敗する場合は、スタッフにお知らせください。
+    景品交換には異なる3地点以上でのクイズ回答が必要です。
   </div>
 
-  <button id="retryButton" type="button">
-    🔄 もう一度確認する
-  </button>
-
   <a class="button" href="index.html">
-    クイズラリーに戻る
+    🎃 クイズラリーに戻る
   </a>
 </section>
 
-<!-- 参加地点不足 -->
-<section id="locked" class="panel hidden">
-  <h2>もう少し回答してね！</h2>
-
-  <p id="lockedText"></p>
-
-  <p id="localNotice" class="info hidden"></p>
-
-  <a class="button" href="index.html">
-    クイズラリーに戻る
-  </a>
-
-  <button id="lockedRetry" type="button">
-    🔄 参加記録を再確認
-  </button>
-</section>
-
-<!-- アンケート -->
 <section id="survey" class="panel hidden">
 
-  <h2>📝 景品交換前のアンケート</h2>
+  <h2>📝 クイズラリーのアンケート</h2>
 
   <p>
-    3地点以上の回答ありがとうございます。
-    景品交換の前にアンケートへのご協力をお願いします。
+    クイズにまだ回答していない方も、
+    アンケートにご協力いただけます。
+  </p>
+
+  <p>
+    アンケートは回答数に関係なく送信できます。
   </p>
 
   <form id="surveyForm">
@@ -204,25 +168,25 @@ footer {
 
     <select id="gender" required>
       <option value="">選択してください</option>
-      <option>男性</option>
-      <option>女性</option>
-      <option>その他</option>
+      <option value="男性">男性</option>
+      <option value="女性">女性</option>
+      <option value="その他">その他</option>
     </select>
 
     <label for="age">② 年齢</label>
 
     <select id="age" required>
       <option value="">選択してください</option>
-      <option>0〜9歳</option>
-      <option>10〜19歳</option>
-      <option>20〜29歳</option>
-      <option>30〜39歳</option>
-      <option>40〜49歳</option>
-      <option>50〜59歳</option>
-      <option>60〜69歳</option>
-      <option>70〜79歳</option>
-      <option>80〜89歳</option>
-      <option>90歳以上</option>
+      <option value="0〜9歳">0〜9歳</option>
+      <option value="10〜19歳">10〜19歳</option>
+      <option value="20〜29歳">20〜29歳</option>
+      <option value="30〜39歳">30〜39歳</option>
+      <option value="40〜49歳">40〜49歳</option>
+      <option value="50〜59歳">50〜59歳</option>
+      <option value="60〜69歳">60〜69歳</option>
+      <option value="70〜79歳">70〜79歳</option>
+      <option value="80〜89歳">80〜89歳</option>
+      <option value="90歳以上">90歳以上</option>
     </select>
 
     <label for="family">
@@ -235,90 +199,101 @@ footer {
       <option value="いいえ">いいえ</option>
     </select>
 
-    <label for="childAge">④ 子どもの年齢</label>
+    <label for="childAge">
+      ④ 子どもの年齢
+    </label>
 
     <select id="childAge" required>
       <option value="">選択してください</option>
-      <option>満3歳まで</option>
-      <option>3歳を含まない未就学児</option>
-      <option>小学生</option>
-      <option>中学生</option>
-      <option>高校生</option>
-      <option>それ以外</option>
-      <option>親子で参加していない</option>
+      <option value="満3歳まで">満3歳まで</option>
+      <option value="3歳を含まない未就学児">
+        3歳を含まない未就学児
+      </option>
+      <option value="小学生">小学生</option>
+      <option value="中学生">中学生</option>
+      <option value="高校生">高校生</option>
+      <option value="それ以外">それ以外</option>
+      <option value="親子で参加していない">
+        親子で参加していない
+      </option>
     </select>
 
     <p>
-      ※親子で参加していない場合は自動的に設定されます。
+      ※親子で参加していない場合は、
+      自動的に「親子で参加していない」を選択します。
     </p>
 
-    <label for="comment">⑤ 感想（任意）</label>
+    <label for="comment">
+      ⑤ イベントの感想（任意）
+    </label>
 
     <textarea
       id="comment"
       maxlength="1000"
-      placeholder="感想をご自由にお書きください"
+      placeholder="ご感想をお聞かせください"
     ></textarea>
 
     <p>
       回答はイベントの集計・改善に利用します。
-      氏名や連絡先などは入力しないでください。
+      氏名や連絡先などの個人情報は入力しないでください。
     </p>
 
     <button id="send" type="submit">
-      アンケートを送信して景品交換へ
+      📝 アンケートを送信する
     </button>
 
-    <p id="surveyStatus" class="error" role="status"></p>
+    <p
+      id="surveyStatus"
+      class="error"
+      role="status"
+    ></p>
 
   </form>
 </section>
 
-<!-- 景品交換 -->
 <section id="eligible" class="panel hidden">
 
   <div class="banner">
     🎃 トリック・オア・トリート！ 🍬
   </div>
 
-  <h2>3地点で回答ありがとう！</h2>
+  <h2>🎉 3地点回答おめでとう！</h2>
 
   <p>
-    <strong>
-      正解・不正解に関係なく、
-      異なる3地点で回答すると景品交換の対象です。
-    </strong>
+    アンケートへのご協力ありがとうございました。
   </p>
 
   <p>
-    アンケートへのご協力ありがとうございました！
+    この画面をスタッフに見せて、
+    「トリック・オア・トリート！」と言って
+    お菓子と交換しよう！
   </p>
 
   <div class="notice">
-    この画面をスタッフに見せて、
-    お菓子と交換しよう！
+    正解・不正解に関係なく、
+    異なる3地点以上で回答すると景品交換の対象です。
   </div>
 
   <p id="countText"></p>
 
-  <p id="prizeClosedNotice" class="notice hidden">
-    景品交換は締め切りました。
-    スタッフにご確認ください。
-  </p>
+  <div
+    id="prizeClosedNotice"
+    class="notice hidden"
+  >
+    <strong>景品交換は締め切りました。</strong>
+    <p>スタッフにご確認ください。</p>
+  </div>
 
   <div id="master" class="notice hidden">
     <h2>🏅 東海道マスター認定！</h2>
-
-    <p>全6地点で回答しました！</p>
-
     <p>
-      表彰状の受取方法は現地スタッフに
-      ご確認ください。
+      全6地点で回答しました！
+      おめでとうございます！
     </p>
   </div>
 
   <a class="button" href="index.html">
-    クイズラリーに戻る
+    🎃 クイズラリーに戻る
   </a>
 
 </section>
@@ -326,7 +301,7 @@ footer {
 </main>
 
 <footer>
-  東海道川崎宿 ハロウィン・クイズラリー2026
+  東海道川崎宿ハロウィン・クイズラリー2026
 </footer>
 
 <script type="module">
@@ -354,137 +329,50 @@ import {
   firebaseConfig
 } from "./firebase-config.js";
 
-
-/* =====================================
-   基本設定
-===================================== */
-
 const $ = id => document.getElementById(id);
 
-let db = null;
-let auth = null;
+let db;
+let auth;
 
 let userId = null;
 
 let answered = [];
 let correct = [];
 
-let localAnswered = [];
-
 let prizeClosed = false;
 
-let loadingNow = false;
-let sendingNow = false;
-
-
-/* =====================================
-   IDの整理
-===================================== */
-
 function ids(value) {
-
   if (!Array.isArray(value)) {
     return [];
   }
 
-  return [...new Set(
-    value
-      .map(Number)
-      .filter(n =>
-        Number.isInteger(n) &&
-        n >= 1 &&
-        n <= 6
-      )
-  )].sort((a,b) => a-b);
-
+  return [
+    ...new Set(
+      value
+        .map(Number)
+        .filter(
+          n =>
+            Number.isInteger(n) &&
+            n >= 1 &&
+            n <= 6
+        )
+    )
+  ];
 }
-
-
-/* =====================================
-   端末内の参加記録
-===================================== */
-
-function readLocal(key) {
-
-  try {
-
-    return ids(
-      JSON.parse(
-        localStorage.getItem(key) || "[]"
-      )
-    );
-
-  } catch (error) {
-
-    console.warn(
-      "端末内の記録を読み込めませんでした",
-      error
-    );
-
-    return [];
-
-  }
-
-}
-
-
-function loadLocalRecords() {
-
-  localAnswered = ids([
-
-    ...readLocal("kawasakiQuizAttended"),
-
-    ...readLocal("kawasakiQuizAnswered"),
-
-    ...readLocal("kawasakiQuizCompleted")
-
-  ]);
-
-}
-
-
-/* =====================================
-   画面切り替え
-===================================== */
 
 function show(id) {
-
-  const panels = [
+  [
     "loading",
-    "errorPanel",
-    "locked",
+    "completed",
     "survey",
     "eligible"
-  ];
-
-  panels.forEach(name => {
-
+  ].forEach(name => {
     $(name).classList.toggle(
       "hidden",
       name !== id
     );
-
   });
-
 }
-
-
-/* =====================================
-   エラー表示
-===================================== */
-
-function showError(message) {
-
-  $("errorText").textContent = message;
-
-  show("errorPanel");
-
-}
-
-
-/* =====================================
-   景品交換画面
-===================================== */
 
 function exchange() {
 
@@ -493,9 +381,7 @@ function exchange() {
   $("countText").textContent =
     "回答した地点：" +
     answered.length +
-    "/6　正解した地点：" +
-    correct.length +
-    "/6";
+    " / 6";
 
   $("master").classList.toggle(
     "hidden",
@@ -507,307 +393,108 @@ function exchange() {
     !prizeClosed
   );
 
+  // 受付終了時は交換を促す表示を隠す
+  const banner = document.querySelector(
+    "#eligible .banner"
+  );
+
+  if (banner) {
+    banner.textContent = prizeClosed
+      ? "🎃 景品交換受付終了"
+      : "🎃 トリック・オア・トリート！ 🍬";
+  }
 }
 
+function completed() {
 
-/* =====================================
-   回答不足画面
-===================================== */
+  show("completed");
 
-function denied() {
+  const remaining = Math.max(
+    0,
+    3 - answered.length
+  );
 
-  show("locked");
-
-  $("lockedText").textContent =
-    "現在" +
+  $("completedText").textContent =
+    "現在 " +
     answered.length +
-    "地点に回答しています。あと" +
-    Math.max(0,3-answered.length) +
-    "地点で回答してください。";
-
-  const notice = $("localNotice");
-
-  if (localAnswered.length > answered.length) {
-
-    notice.classList.remove("hidden");
-
-    notice.textContent =
-      "この端末には" +
-      localAnswered.length +
-      "地点の参加記録がありますが、" +
-      "オンライン上では" +
-      answered.length +
-      "地点しか確認できませんでした。" +
-      "通信状態を確認し、クイズラリーのページから" +
-      "参加記録の保存状況を確認してください。";
-
-  } else {
-
-    notice.classList.add("hidden");
-
-  }
-
+    " 地点で回答しています。" +
+    "景品交換まであと " +
+    remaining +
+    " 地点です。";
 }
-
-
-/* =====================================
-   Firebaseエラーの説明
-===================================== */
-
-function errorMessage(error, target) {
-
-  console.error(target, error);
-
-  const code = error?.code || "";
-
-  if (code === "permission-denied") {
-
-    return target +
-      "へのアクセスが拒否されました。" +
-      "Firestoreのセキュリティルールを確認してください。" +
-      "（" + code + "）";
-
-  }
-
-  if (code === "unavailable") {
-
-    return target +
-      "に接続できませんでした。" +
-      "通信状態を確認してください。" +
-      "（" + code + "）";
-
-  }
-
-  if (
-    code === "auth/operation-not-allowed"
-  ) {
-
-    return "Firebaseの匿名認証が許可されていません。" +
-      "Authenticationの設定を確認してください。";
-
-  }
-
-  if (
-    code === "auth/network-request-failed"
-  ) {
-
-    return "Firebase認証時に通信エラーが発生しました。";
-
-  }
-
-  return target +
-    "の処理に失敗しました。" +
-    (code ? "（" + code + "）" : "");
-
-}
-
-
-/* =====================================
-   参加記録の取得
-===================================== */
-
-async function loadParticipant() {
-
-  const ref = doc(
-    db,
-    "participants",
-    userId
-  );
-
-  const snapshot = await getDoc(ref);
-
-  if (!snapshot.exists()) {
-
-    answered = [];
-    correct = [];
-
-    return;
-
-  }
-
-  const data = snapshot.data();
-
-  correct = ids(
-    data.correct ??
-    data.completed ??
-    []
-  );
-
-  answered = ids([
-
-    ...(Array.isArray(data.answered)
-      ? data.answered
-      : []),
-
-    ...(Array.isArray(data.attended)
-      ? data.attended
-      : []),
-
-    ...correct
-
-  ]);
-
-}
-
-
-/* =====================================
-   アンケート記録の確認
-===================================== */
-
-async function loadSurveyStatus() {
-
-  const ref = doc(
-    db,
-    "surveys",
-    userId
-  );
-
-  const snapshot = await getDoc(ref);
-
-  return snapshot.exists();
-
-}
-
-
-/* =====================================
-   メイン処理
-===================================== */
 
 async function start(user) {
 
-  if (loadingNow) {
-    return;
-  }
-
-  loadingNow = true;
-
   userId = user.uid;
-
-  show("loading");
-
-  $("loadingText").textContent =
-    "参加記録を確認しています…";
-
-  loadLocalRecords();
 
   try {
 
-    // 参加記録を先に取得する
-    try {
+    const [
+      participantSnap,
+      surveySnap
+    ] = await Promise.all([
 
-      await loadParticipant();
-
-    } catch (error) {
-
-      showError(
-        errorMessage(
-          error,
-          "参加記録"
+      getDoc(
+        doc(
+          db,
+          "participants",
+          userId
         )
-      );
+      ),
 
-      return;
-
-    }
-
-    // 参加資格の確認
-    if (answered.length < 3) {
-
-      denied();
-
-      return;
-
-    }
-
-    // アンケートの取得は別処理
-    let surveyExists = false;
-
-    try {
-
-      surveyExists =
-        await loadSurveyStatus();
-
-    } catch (error) {
-
-      showError(
-        errorMessage(
-          error,
-          "アンケート記録"
+      getDoc(
+        doc(
+          db,
+          "surveys",
+          userId
         )
-      );
+      )
 
-      return;
+    ]);
 
-    }
+    const data = participantSnap.exists()
+      ? participantSnap.data()
+      : {};
 
-    // 回答済みなら景品交換へ
-    if (surveyExists) {
-
-      exchange();
-
-    } else {
-
-      show("survey");
-
-    }
-
-  } finally {
-
-    loadingNow = false;
-
-  }
-
-}
-
-
-/* =====================================
-   再試行
-===================================== */
-
-async function retry() {
-
-  if (!auth) {
-
-    showError(
-      "Firebaseが初期化されていません。"
+    correct = ids(
+      data.correct ??
+      data.completed ??
+      []
     );
 
-    return;
+    answered = ids([
+      ...(data.answered ?? []),
+      ...(data.attended ?? []),
+      ...correct
+    ]);
 
+    // アンケート回答済み
+    if (surveySnap.exists()) {
+
+      if (answered.length >= 3) {
+        exchange();
+      } else {
+        completed();
+      }
+
+      return;
+    }
+
+    // 0問でもアンケートを表示する
+    show("survey");
+
+  } catch (error) {
+
+    console.error(error);
+
+    $("loadingText").textContent =
+      "記録を確認できませんでした。" +
+      "通信状態とFirestoreの設定を確認してください。" +
+      "（" +
+      (error.code || error.message) +
+      "）";
   }
-
-  const user = auth.currentUser;
-
-  if (!user) {
-
-    showError(
-      "ログイン情報を確認できませんでした。" +
-      "ページを再読み込みしてください。"
-    );
-
-    return;
-
-  }
-
-  await start(user);
-
 }
-
-
-$("retryButton").addEventListener(
-  "click",
-  retry
-);
-
-$("lockedRetry").addEventListener(
-  "click",
-  retry
-);
-
-
-/* =====================================
-   親子参加の入力切り替え
-===================================== */
 
 $("family").addEventListener(
   "change",
@@ -823,22 +510,18 @@ $("family").addEventListener(
       $("childAge").value =
         "親子で参加していない";
 
-    } else if (
-      $("childAge").value ===
-      "親子で参加していない"
-    ) {
+    } else {
 
-      $("childAge").value = "";
+      if (
+        $("childAge").value ===
+        "親子で参加していない"
+      ) {
+        $("childAge").value = "";
+      }
 
     }
-
   }
 );
-
-
-/* =====================================
-   アンケート送信
-===================================== */
 
 $("surveyForm").addEventListener(
   "submit",
@@ -846,17 +529,10 @@ $("surveyForm").addEventListener(
 
     event.preventDefault();
 
-    if (sendingNow) {
-      return;
-    }
-
-    if (!userId || answered.length < 3) {
-
+    if (!userId) {
       $("surveyStatus").textContent =
-        "参加資格を確認できませんでした。";
-
+        "ログイン処理中です。少し待ってから再試行してください。";
       return;
-
     }
 
     const gender =
@@ -880,29 +556,18 @@ $("surveyForm").addEventListener(
       !gender ||
       !age ||
       !family ||
-      !childAge
+      !childAge ||
+      (
+        family === "はい" &&
+        childAge === "親子で参加していない"
+      )
     ) {
 
       $("surveyStatus").textContent =
-        "必須項目を入力してください。";
+        "必須項目を確認してください。";
 
       return;
-
     }
-
-    if (
-      family === "はい" &&
-      childAge === "親子で参加していない"
-    ) {
-
-      $("surveyStatus").textContent =
-        "子どもの年齢を選択してください。";
-
-      return;
-
-    }
-
-    sendingNow = true;
 
     const button = $("send");
 
@@ -913,93 +578,56 @@ $("surveyForm").addEventListener(
 
     try {
 
-      // 送信直前に参加資格を再確認
-      await loadParticipant();
-
-      if (answered.length < 3) {
-
-        denied();
-
-        return;
-
-      }
-
-      // 既存回答がある場合は上書きしない
-      const surveyRef = doc(
-        db,
-        "surveys",
-        userId
-      );
-
-      const existing = await getDoc(
-        surveyRef
-      );
-
-      if (existing.exists()) {
-
-        exchange();
-
-        return;
-
-      }
-
       await setDoc(
-        surveyRef,
+        doc(
+          db,
+          "surveys",
+          userId
+        ),
         {
           gender,
           age,
           family,
           childAge,
           comment,
-          submittedAt: serverTimestamp()
+          submittedAt:serverTimestamp()
         }
       );
 
-      exchange();
+      // 回答数に応じて画面を切り替える
+      if (answered.length >= 3) {
+        exchange();
+      } else {
+        completed();
+      }
 
     } catch (error) {
 
+      console.error(error);
+
       $("surveyStatus").textContent =
-        errorMessage(
-          error,
-          "アンケート保存"
-        );
+        "アンケートの保存に失敗しました。" +
+        "（" +
+        (error.code || error.message) +
+        "）";
 
     } finally {
-
-      sendingNow = false;
 
       button.disabled = false;
 
     }
-
   }
 );
 
-
-/* =====================================
-   Firebase初期化
-===================================== */
-
 try {
 
-  if (!firebaseConfig?.apiKey) {
-
-    throw new Error(
-      "Firebase設定がありません"
-    );
-
-  }
-
-  const app = initializeApp(
-    firebaseConfig
-  );
+  const app =
+    initializeApp(firebaseConfig);
 
   db = getFirestore(app);
 
   auth = getAuth(app);
 
-  // ログイン状態の確認
   onAuthStateChanged(
     auth,
     async user => {
@@ -1007,56 +635,23 @@ try {
       if (!user) {
 
         try {
-
-          $("loadingText").textContent =
-            "参加者情報を確認しています…";
-
           await signInAnonymously(auth);
-
         } catch (error) {
 
-          showError(
-            errorMessage(
-              error,
-              "匿名ログイン"
-            )
-          );
-
+          $("loadingText").textContent =
+            "ログインに失敗しました。" +
+            "（" +
+            (error.code || error.message) +
+            "）";
         }
 
         return;
-
       }
 
-      try {
-
-        await start(user);
-
-      } catch (error) {
-
-        showError(
-          errorMessage(
-            error,
-            "参加記録確認"
-          )
-        );
-
-      }
-
-    },
-    error => {
-
-      showError(
-        errorMessage(
-          error,
-          "Firebase認証"
-        )
-      );
-
+      await start(user);
     }
   );
 
-  // 景品受付状態
   onSnapshot(
     doc(db,"settings","event"),
     snapshot => {
@@ -1066,32 +661,27 @@ try {
         snapshot.data().prizeClosed === true;
 
       if (
-        !$("eligible").classList.contains(
-          "hidden"
-        )
+        !$("eligible").classList.contains("hidden")
       ) {
-
         exchange();
-
       }
 
     },
     error => {
-
       console.error(
-        "景品受付設定の取得に失敗:",
+        "景品受付状態の取得エラー",
         error
       );
-
     }
   );
 
 } catch (error) {
 
-  showError(
-    "Firebaseを初期化できませんでした。" +
-    "firebase-config.jsを確認してください。"
-  );
+  console.error(error);
+
+  $("loadingText").textContent =
+    "Firebaseを利用できません。" +
+    "firebase-config.jsを確認してください。";
 
 }
 
