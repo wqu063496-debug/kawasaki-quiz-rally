@@ -1,25 +1,931 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管理者ページ｜東海道川崎宿クイズラリー</title>
-<style>:root{--ink:#24170f;--orange:#d84b20;--purple:#54205d;--paper:#fff5d9}*{box-sizing:border-box}body{margin:0;background:#243d46;color:var(--ink);font-family:"Yu Mincho","Hiragino Mincho ProN",serif}header{text-align:center;padding:24px 12px;background:linear-gradient(#fff5d9,#f4dfb9);border-bottom:7px solid var(--orange)}h1{font-size:clamp(26px,5vw,42px);margin:8px}main{width:min(100% - 24px,850px);margin:24px auto}.panel{background:var(--paper);border:3px solid #a74b25;border-radius:20px;padding:20px;margin:18px 0;box-shadow:0 7px 0 #401b22}h2{color:var(--purple)}input{display:block;width:100%;font:inherit;padding:12px;border:2px solid #c9a36a;border-radius:10px;margin:8px 0}button,.button{font:inherit;font-weight:bold;padding:12px 16px;border-radius:999px;border:2px solid #8f2e19;background:linear-gradient(#e65b27,#b83216);color:#fff8df;cursor:pointer;margin:6px 4px 6px 0;text-decoration:none;display:inline-block}button.secondary{background:linear-gradient(#74317b,#4d1b58);border-color:#36133d}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.stat{border:2px dashed #c58b32;border-radius:14px;padding:16px;text-align:center}.num{font-size:42px;font-weight:bold;color:#54205d}.muted{font-size:13px}.hidden{display:none!important}.notice{padding:12px;border-radius:12px;background:#ffebbd;border:2px dashed #d98a2e;overflow-wrap:anywhere}.state{font-weight:bold;font-size:22px}footer{text-align:center;color:#fff2d4;padding:24px}</style></head><body>
-<header><div>🎃 東海道川崎宿 ハロウィン・クイズラリー</div><h1>管理者ページ</h1><div>参加人数の集計・景品受付の管理</div></header><main>
-<section id="loginPanel" class="panel"><h2>🔐 管理者ログイン</h2><p>Firebase Authenticationで作成した管理者アカウントでログインしてください。</p><form id="loginForm"><input id="email" type="email" autocomplete="username" placeholder="管理者メールアドレス" required><input id="password" type="password" autocomplete="current-password" placeholder="パスワード" required><button type="submit">ログイン</button></form><p id="loginMessage" class="notice">初回はFirebaseの設定と管理者登録が必要です。</p><div id="uidBox" class="notice hidden"><strong>管理者UID：</strong><span id="uidText"></span><p>このUIDをFirestoreの admins コレクションにドキュメントIDとして登録し、ドキュメントを作成後に再読み込みしてください。</p></div></section>
-<section id="dashboard" class="panel hidden"><h2>📊 参加状況</h2><p id="lastUpdated" class="muted">集計中…</p><div class="grid"><div class="stat"><div>1問以上回答した人数</div><div id="count1" class="num">—</div><div class="muted">人</div></div><div class="stat"><div>3問以上回答した人数</div><div id="count3" class="num">—</div><div class="muted">人</div></div><div class="stat"><div>6問すべて回答した人数</div><div id="count6" class="num">—</div><div class="muted">人</div></div></div><p><button id="refreshButton" class="secondary">🔄 人数を更新</button></p><h2>🎁 景品交換の受付</h2><p>現在の状態：<span id="prizeState" class="state">確認中…</span></p><button id="togglePrize">受付状態を切り替える</button><p class="muted">切り替えると、参加者の index.html と prize.html に反映されます。</p><p id="adminMessage" class="notice"></p><button id="logoutButton" class="secondary">ログアウト</button></section>
-<p><a class="button" href="index.html">クイズページに戻る</a></p></main><footer>管理者専用ページ。URLを知っているだけでは管理操作できません。</footer>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>管理者ページ｜東海道川崎宿ハロウィン・クイズラリー2026</title>
+
+<style>
+:root {
+  --ink:#24170f;
+  --orange:#d84b20;
+  --purple:#54205d;
+  --paper:#fff5d9;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  background:#243d46;
+  color:var(--ink);
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+}
+
+header {
+  text-align:center;
+  padding:24px 12px;
+  background:linear-gradient(#fff5d9,#f4dfb9);
+  border-bottom:7px solid var(--orange);
+}
+
+h1 {
+  font-size:clamp(26px,5vw,42px);
+  margin:8px;
+}
+
+main {
+  width:min(100% - 24px,950px);
+  margin:24px auto;
+}
+
+.panel {
+  background:var(--paper);
+  border:3px solid #a74b25;
+  border-radius:20px;
+  padding:20px;
+  margin:18px 0;
+  box-shadow:0 7px 0 #401b22;
+}
+
+h2 {
+  color:var(--purple);
+}
+
+h3 {
+  color:#743f2b;
+}
+
+input {
+  display:block;
+  width:100%;
+  font:inherit;
+  padding:12px;
+  border:2px solid #c9a36a;
+  border-radius:10px;
+  margin:8px 0;
+}
+
+button,
+.button {
+  font:inherit;
+  font-weight:bold;
+  padding:12px 16px;
+  border-radius:999px;
+  border:2px solid #8f2e19;
+  background:linear-gradient(#e65b27,#b83216);
+  color:#fff8df;
+  cursor:pointer;
+  margin:6px 4px 6px 0;
+  text-decoration:none;
+  display:inline-block;
+}
+
+button.secondary {
+  background:linear-gradient(#74317b,#4d1b58);
+  border-color:#36133d;
+}
+
+button:disabled {
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+
+.stat {
+  border:2px dashed #c58b32;
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+}
+
+.num {
+  font-size:42px;
+  font-weight:bold;
+  color:#54205d;
+}
+
+.muted {
+  font-size:13px;
+}
+
+.hidden {
+  display:none!important;
+}
+
+.notice {
+  padding:12px;
+  border-radius:12px;
+  background:#ffebbd;
+  border:2px dashed #d98a2e;
+  overflow-wrap:anywhere;
+}
+
+.state {
+  font-weight:bold;
+  font-size:22px;
+}
+
+.resultBox {
+  background:#fffaf0;
+  border:2px solid #d4b27d;
+  border-radius:12px;
+  padding:15px;
+  margin:15px 0;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin:10px 0;
+}
+
+th,
+td {
+  border-bottom:1px solid #d5c3a3;
+  padding:10px 6px;
+  text-align:left;
+  overflow-wrap:anywhere;
+}
+
+th {
+  background:#f0dfbd;
+}
+
+.comment {
+  background:white;
+  border:1px solid #d4b27d;
+  border-radius:10px;
+  padding:12px;
+  margin:10px 0;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.bar {
+  height:10px;
+  background:#e8d8c1;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.barFill {
+  height:100%;
+  background:#b44e86;
+}
+
+footer {
+  text-align:center;
+  color:#fff2d4;
+  padding:24px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>🎃 東海道川崎宿 ハロウィン・クイズラリー2026</div>
+  <h1>管理者ページ</h1>
+  <div>参加人数・景品受付・アンケート集計</div>
+</header>
+
+<main>
+
+<section id="loginPanel" class="panel">
+
+  <h2>🔐 管理者ログイン</h2>
+
+  <p>
+    Firebase Authenticationで作成した
+    管理者アカウントでログインしてください。
+  </p>
+
+  <form id="loginForm">
+
+    <input
+      id="email"
+      type="email"
+      autocomplete="username"
+      placeholder="管理者メールアドレス"
+      required
+    >
+
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      placeholder="パスワード"
+      required
+    >
+
+    <button type="submit">ログイン</button>
+
+  </form>
+
+  <p id="loginMessage" class="notice">
+    管理者アカウントでログインしてください。
+  </p>
+
+  <div id="uidBox" class="notice hidden">
+
+    <strong>管理者UID：</strong>
+    <span id="uidText"></span>
+
+    <p>
+      このUIDをFirestoreのadminsコレクションに
+      ドキュメントIDとして登録してください。
+    </p>
+
+  </div>
+
+</section>
+
+<section id="dashboard" class="hidden">
+
+  <section class="panel">
+
+    <h2>📊 参加状況</h2>
+
+    <p id="lastUpdated" class="muted">
+      集計中…
+    </p>
+
+    <div class="grid">
+
+      <div class="stat">
+        <div>1地点以上回答した人数</div>
+        <div id="count1" class="num">—</div>
+        <div class="muted">人</div>
+      </div>
+
+      <div class="stat">
+        <div>3地点以上回答した人数</div>
+        <div id="count3" class="num">—</div>
+        <div class="muted">人</div>
+      </div>
+
+      <div class="stat">
+        <div>6地点すべて回答した人数</div>
+        <div id="count6" class="num">—</div>
+        <div class="muted">人</div>
+      </div>
+
+    </div>
+
+    <p class="muted">
+      ※正解・不正解に関係なく、
+      回答した地点数で集計します。
+    </p>
+
+    <button id="refreshButton" class="secondary">
+      🔄 すべての集計を更新
+    </button>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>🎁 景品交換の受付</h2>
+
+    <p>
+      現在の状態：
+      <span id="prizeState" class="state">
+        確認中…
+      </span>
+    </p>
+
+    <button id="togglePrize">
+      受付状態を切り替える
+    </button>
+
+    <p class="muted">
+      変更すると、参加者向けページにも反映されます。
+    </p>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>📝 アンケート集計</h2>
+
+    <p>
+      景品交換前に参加者が回答した
+      アンケートの結果を確認できます。
+    </p>
+
+    <div class="grid">
+
+      <div class="stat">
+        <div>アンケート回答数</div>
+        <div id="surveyCount" class="num">—</div>
+        <div class="muted">件</div>
+      </div>
+
+      <div class="stat">
+        <div>親子で参加</div>
+        <div id="familyCount" class="num">—</div>
+        <div class="muted">件</div>
+      </div>
+
+      <div class="stat">
+        <div>感想の記入数</div>
+        <div id="commentCount" class="num">—</div>
+        <div class="muted">件</div>
+      </div>
+
+    </div>
+
+    <div class="resultBox">
+      <h3>① 性別</h3>
+      <div id="genderResults"></div>
+    </div>
+
+    <div class="resultBox">
+      <h3>② 年齢</h3>
+      <div id="ageResults"></div>
+    </div>
+
+    <div class="resultBox">
+      <h3>③ 親子での参加</h3>
+      <div id="familyResults"></div>
+    </div>
+
+    <div class="resultBox">
+      <h3>④ 子どもの年齢</h3>
+      <div id="childAgeResults"></div>
+    </div>
+
+    <div class="resultBox">
+
+      <h3>⑤ 参加者の感想</h3>
+
+      <p class="muted">
+        任意で記入された感想を表示します。
+      </p>
+
+      <div id="comments"></div>
+
+    </div>
+
+    <button id="refreshSurvey" class="secondary">
+      🔄 アンケートを更新
+    </button>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>⚙️ 管理者操作</h2>
+
+    <p id="adminMessage" class="notice">
+      管理者としてログインしています。
+    </p>
+
+    <button id="logoutButton" class="secondary">
+      ログアウト
+    </button>
+
+  </section>
+
+</section>
+
+<p>
+  <a class="button" href="index.html">
+    クイズページに戻る
+  </a>
+</p>
+
+</main>
+
+<footer>
+  管理者専用ページ
+</footer>
+
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
-import { firebaseConfig } from './firebase-config.js';
-const loginPanel=document.getElementById('loginPanel'),dashboard=document.getElementById('dashboard'),msg=document.getElementById('loginMessage'),adminMsg=document.getElementById('adminMessage');let auth,db,currentUser,isAdmin=false,closed=false;
-if(!firebaseConfig||!firebaseConfig.apiKey||String(firebaseConfig.apiKey).startsWith('PASTE_')){msg.textContent='まだFirebase設定が完了していません。firebase-config.jsを設定してからお使いください。';document.getElementById('loginForm').querySelector('button').disabled=true;}
-else{const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);}
-function show(el,on){el.classList.toggle('hidden',!on)}
-async function checkAdmin(user){const a=await getDoc(doc(db,'admins',user.uid));return a.exists()}
-async function loadCounts(){adminMsg.textContent='集計しています…';const snap=await getDocs(collection(db,'participants'));let one=0,three=0,six=0;snap.forEach(d=>{const a=Array.isArray(d.data().answered)?new Set(d.data().answered).size:0;if(a>=1)one++;if(a>=3)three++;if(a>=6)six++;});document.getElementById('count1').textContent=one;document.getElementById('count3').textContent=three;document.getElementById('count6').textContent=six;document.getElementById('lastUpdated').textContent=`最終更新：${new Date().toLocaleString('ja-JP')}`;adminMsg.textContent='人数を更新しました。';}
-async function loadPrize(){const snap=await getDoc(doc(db,'settings','event'));closed=snap.exists()&&snap.data().prizeClosed===true;document.getElementById('prizeState').textContent=closed?'🔴 景品交換は締め切り':'🟢 景品交換受付中';document.getElementById('togglePrize').textContent=closed?'受付を再開する':'景品交換を締め切る';}
-document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();if(!auth)return;msg.textContent='ログインしています…';try{await signInWithEmailAndPassword(auth,document.getElementById('email').value,document.getElementById('password').value);}catch(err){msg.textContent='ログインできませんでした。メールアドレスとパスワードを確認してください。 ('+err.code+')';}});
-if(auth)onAuthStateChanged(auth,async user=>{currentUser=user;if(!user){show(loginPanel,true);show(dashboard,false);return;}show(loginPanel,true);show(dashboard,false);document.getElementById('uidText').textContent=user.uid;show(document.getElementById('uidBox'),true);try{isAdmin=await checkAdmin(user);if(!isAdmin){msg.textContent='このアカウントはまだ管理者登録されていません。下のUIDをFirestoreの admins コレクションにドキュメントIDとして登録してください。';return;}show(loginPanel,false);show(dashboard,true);await Promise.all([loadCounts(),loadPrize()]);}catch(err){msg.textContent='権限を確認できません。Firestoreのセキュリティルールと admins 登録を確認してください。';console.error(err);}});
-document.getElementById('refreshButton').addEventListener('click',async()=>{try{await loadCounts();await loadPrize()}catch(e){adminMsg.textContent='更新に失敗しました。通信とFirestoreルールを確認してください。';}});
-document.getElementById('togglePrize').addEventListener('click',async()=>{if(!isAdmin)return;const next=!closed;const promptText=next?'景品交換を締め切りますか？参加者ページにも表示されます。':'景品交換の受付を再開しますか？';if(!confirm(promptText))return;try{await setDoc(doc(db,'settings','event'),{prizeClosed:next,updatedAt:serverTimestamp(),updatedBy:currentUser.uid},{merge:true});await loadPrize();adminMsg.textContent='受付状態を更新しました。';}catch(e){adminMsg.textContent='変更できませんでした。Firestoreルールを確認してください。';console.error(e);}});
-document.getElementById('logoutButton').addEventListener('click',()=>signOut(auth));
-</script></body></html>
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+import { firebaseConfig } from "./firebase-config.js";
+
+const $ = id => document.getElementById(id);
+
+let auth;
+let db;
+let currentUser = null;
+let isAdmin = false;
+let closed = false;
+
+const genderOptions = [
+  "男性",
+  "女性",
+  "その他"
+];
+
+const ageOptions = [
+  "0〜9歳",
+  "10〜19歳",
+  "20〜29歳",
+  "30〜39歳",
+  "40〜49歳",
+  "50〜59歳",
+  "60〜69歳",
+  "70〜79歳",
+  "80〜89歳",
+  "90歳以上"
+];
+
+const familyOptions = [
+  "はい",
+  "いいえ"
+];
+
+const childAgeOptions = [
+  "満3歳まで",
+  "3歳を含まない未就学児",
+  "小学生",
+  "中学生",
+  "高校生",
+  "それ以外",
+  "親子で参加していない"
+];
+
+function show(element, visible) {
+  element.classList.toggle("hidden", !visible);
+}
+
+function getValidIds(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return [...new Set(
+    value
+      .map(Number)
+      .filter(
+        n => Number.isInteger(n) && n >= 1 && n <= 6
+      )
+  )];
+}
+
+function getAnsweredIds(data) {
+  const answered = getValidIds(
+    data.answered ?? data.attended ?? []
+  );
+
+  const correct = getValidIds(
+    data.correct ?? data.completed ?? []
+  );
+
+  return getValidIds([...answered, ...correct]);
+}
+
+async function checkAdmin(user) {
+  const snapshot = await getDoc(
+    doc(db, "admins", user.uid)
+  );
+
+  return snapshot.exists();
+}
+
+async function loadCounts() {
+
+  if (!isAdmin) return;
+
+  const snapshot = await getDocs(
+    collection(db, "participants")
+  );
+
+  let one = 0;
+  let three = 0;
+  let six = 0;
+
+  snapshot.forEach(item => {
+
+    const data = item.data();
+    const count = getAnsweredIds(data).length;
+
+    if (count >= 1) one++;
+    if (count >= 3) three++;
+    if (count >= 6) six++;
+
+  });
+
+  $("count1").textContent = one;
+  $("count3").textContent = three;
+  $("count6").textContent = six;
+
+  $("lastUpdated").textContent =
+    "最終更新：" + new Date().toLocaleString("ja-JP");
+
+}
+
+async function loadPrize() {
+
+  const snapshot = await getDoc(
+    doc(db, "settings", "event")
+  );
+
+  closed =
+    snapshot.exists() &&
+    snapshot.data().prizeClosed === true;
+
+  $("prizeState").textContent = closed
+    ? "🔴 景品交換は締め切り"
+    : "🟢 景品交換受付中";
+
+  $("togglePrize").textContent = closed
+    ? "受付を再開する"
+    : "景品交換を締め切る";
+
+}
+
+function createTable(containerId, options, records, key) {
+
+  const container = $(containerId);
+  container.replaceChildren();
+
+  const table = document.createElement("table");
+
+  const header = document.createElement("tr");
+
+  ["項目", "回答数", "割合"].forEach(text => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    header.appendChild(th);
+  });
+
+  table.appendChild(header);
+
+  const total = records.length;
+
+  options.forEach(option => {
+
+    const count = records.filter(
+      record => record[key] === option
+    ).length;
+
+    const percentage = total > 0
+      ? (count / total * 100).toFixed(1)
+      : "0.0";
+
+    const row = document.createElement("tr");
+
+    [
+      option,
+      String(count),
+      percentage + "%"
+    ].forEach(text => {
+
+      const td = document.createElement("td");
+      td.textContent = text;
+      row.appendChild(td);
+
+    });
+
+    table.appendChild(row);
+
+  });
+
+  container.appendChild(table);
+
+}
+
+function showComments(records) {
+
+  const container = $("comments");
+  container.replaceChildren();
+
+  const comments = records.filter(
+    record =>
+      typeof record.comment === "string" &&
+      record.comment.trim() !== ""
+  );
+
+  $("commentCount").textContent = comments.length;
+
+  if (comments.length === 0) {
+    container.textContent =
+      "現在、感想の回答はありません。";
+    return;
+  }
+
+  comments.forEach((record, index) => {
+
+    const div = document.createElement("div");
+    div.className = "comment";
+
+    div.textContent =
+      "【感想 " + (index + 1) + "】\n" +
+      record.comment;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+async function loadSurveys() {
+
+  if (!isAdmin) return;
+
+  const snapshot = await getDocs(
+    collection(db, "surveys")
+  );
+
+  const records = snapshot.docs.map(
+    item => item.data()
+  );
+
+  $("surveyCount").textContent = records.length;
+
+  $("familyCount").textContent = records.filter(
+    record => record.family === "はい"
+  ).length;
+
+  createTable(
+    "genderResults",
+    genderOptions,
+    records,
+    "gender"
+  );
+
+  createTable(
+    "ageResults",
+    ageOptions,
+    records,
+    "age"
+  );
+
+  createTable(
+    "familyResults",
+    familyOptions,
+    records,
+    "family"
+  );
+
+  createTable(
+    "childAgeResults",
+    childAgeOptions,
+    records,
+    "childAge"
+  );
+
+  showComments(records);
+
+}
+
+async function refreshAll() {
+
+  $("adminMessage").textContent =
+    "データを更新しています…";
+
+  try {
+
+    await Promise.all([
+      loadCounts(),
+      loadPrize(),
+      loadSurveys()
+    ]);
+
+    $("adminMessage").textContent =
+      "すべてのデータを更新しました。";
+
+  } catch (error) {
+
+    console.error(error);
+
+    $("adminMessage").textContent =
+      "一部のデータを取得できませんでした。" +
+      "Firestoreの権限設定と通信状態を確認してください。";
+
+  }
+
+}
+
+$("loginForm").addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    if (!auth) return;
+
+    $("loginMessage").textContent =
+      "ログインしています…";
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        $("email").value,
+        $("password").value
+      );
+
+    } catch (error) {
+
+      $("loginMessage").textContent =
+        "ログインできませんでした。" +
+        "メールアドレスとパスワードを確認してください。";
+
+    }
+
+  }
+);
+
+$("refreshButton").addEventListener(
+  "click",
+  refreshAll
+);
+
+$("refreshSurvey").addEventListener(
+  "click",
+  async () => {
+
+    try {
+
+      await loadSurveys();
+
+      $("adminMessage").textContent =
+        "アンケートを更新しました。";
+
+    } catch (error) {
+
+      console.error(error);
+
+      $("adminMessage").textContent =
+        "アンケートを取得できませんでした。" +
+        "Firestoreの権限設定を確認してください。";
+
+    }
+
+  }
+);
+
+$("togglePrize").addEventListener(
+  "click",
+  async () => {
+
+    if (!isAdmin || !currentUser) return;
+
+    const next = !closed;
+
+    const message = next
+      ? "景品交換を締め切りますか？"
+      : "景品交換の受付を再開しますか？";
+
+    if (!confirm(message)) return;
+
+    $("togglePrize").disabled = true;
+
+    try {
+
+      await setDoc(
+        doc(db, "settings", "event"),
+        {
+          prizeClosed: next,
+          updatedAt: serverTimestamp(),
+          updatedBy: currentUser.uid
+        },
+        { merge: true }
+      );
+
+      await loadPrize();
+
+      $("adminMessage").textContent =
+        "受付状態を変更しました。";
+
+    } catch (error) {
+
+      console.error(error);
+
+      $("adminMessage").textContent =
+        "受付状態を変更できませんでした。" +
+        "Firestoreの権限設定を確認してください。";
+
+    } finally {
+
+      $("togglePrize").disabled = false;
+
+    }
+
+  }
+);
+
+$("logoutButton").addEventListener(
+  "click",
+  async () => {
+
+    if (!auth) return;
+
+    await signOut(auth);
+
+  }
+);
+
+if (
+  !firebaseConfig ||
+  !firebaseConfig.apiKey ||
+  String(firebaseConfig.apiKey).startsWith("PASTE_")
+) {
+
+  $("loginMessage").textContent =
+    "Firebase設定が完了していません。" +
+    "firebase-config.jsを確認してください。";
+
+  $("loginForm").querySelector("button").disabled = true;
+
+} else {
+
+  const app = initializeApp(firebaseConfig);
+
+  auth = getAuth(app);
+  db = getFirestore(app);
+
+  onAuthStateChanged(auth, async user => {
+
+    currentUser = user;
+    isAdmin = false;
+
+    show($("dashboard"), false);
+    show($("loginPanel"), true);
+
+    if (!user) {
+
+      show($("uidBox"), false);
+
+      $("loginMessage").textContent =
+        "管理者アカウントでログインしてください。";
+
+      return;
+
+    }
+
+    $("uidText").textContent = user.uid;
+    show($("uidBox"), true);
+
+    try {
+
+      isAdmin = await checkAdmin(user);
+
+      if (!isAdmin) {
+
+        $("loginMessage").textContent =
+          "このアカウントは管理者登録されていません。" +
+          "表示されたUIDをFirestoreのadminsに登録してください。";
+
+        return;
+
+      }
+
+      show($("loginPanel"), false);
+      show($("dashboard"), true);
+
+      await refreshAll();
+
+    } catch (error) {
+
+      console.error(error);
+
+      $("loginMessage").textContent =
+        "管理者権限を確認できませんでした。" +
+        "Firestoreの設定を確認してください。";
+
+    }
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
